@@ -401,27 +401,114 @@
   <p class="subtitle">Product Strategy &amp; Measurement Framework &middot; March 2026</p>
 </header>
 
-<!-- ── VISUAL DIAGRAM ── -->
+<!-- ── 1. PROBLEM / OPPORTUNITY ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:var(--text);">&#9670;</div>
+    <div class="section-badge" style="background:#dc2626;">1</div>
+    <h2>Problem / Opportunity</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128683;</div>
+        <div>
+          <div class="impact-title">No cross-account visibility</div>
+          <div class="impact-desc">Parent-level users cannot easily analyze performance across child accounts. There is no consolidated view for strategic decision-making.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128260;</div>
+        <div>
+          <div class="impact-title">Painful manual workaround</div>
+          <div class="impact-desc">Current process: impersonate child accounts, export CSVs, manually aggregate — slow, error-prone, and unscalable.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128200;</div>
+        <div>
+          <div class="impact-title">Blocked enterprise growth</div>
+          <div class="impact-desc">Lack of parent-level reporting reduces enterprise adoption and strategic oversight, limiting multi-location expansion.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 2. NORTH STAR (statement + metric combined) ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--north-star);">2</div>
+    <h2>North Star</h2>
+  </div>
+  <div class="card north-star-card">
+    <p class="objective"><strong>Objective:</strong> Enable parent accounts to view consolidated, actionable reporting across all child accounts for email, contact growth, SMS, social, and automations — reducing impersonation, improving executive visibility, and scaling Teams usage.</p>
+    <blockquote>"Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions."</blockquote>
+  </div>
+  <div class="card metric-card" style="margin-top:0.75rem;">
+    <p class="metric-primary">
+      % of parent account sessions that lead to &ge;1 actionable insight or follow-up action across child accounts
+    </p>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">An "actionable insight" is any session where the user performs at least one of:</p>
+    <div class="examples-grid">
+      <div class="example-item">Drill-down into a campaign or child account</div>
+      <div class="example-item">Export via CSV or Report Builder</div>
+      <div class="example-item">Identify top-performing lists or campaigns</div>
+      <div class="example-item">Resolve bounce / unsubscribe issues</div>
+      <div class="example-item">Apply a recommendation from the reporting tool</div>
+      <div class="example-item">Share or schedule a report</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. GOALS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:#0891b2;">3</div>
+    <h2>Goals</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #0891b2;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128274;</div>
+        <div>
+          <div class="impact-title">Secure, scalable, role-aware reporting</div>
+          <div class="impact-desc">Consolidated, multi-account reporting that respects account hierarchies and user permissions.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128269;</div>
+        <div>
+          <div class="impact-title">Roll-up + drill-down views</div>
+          <div class="impact-desc">Provide a framework that supports both portfolio-level roll-ups and campaign/team-level drill-downs.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#127942;</div>
+        <div>
+          <div class="impact-title">Executive visibility &amp; ROI</div>
+          <div class="impact-desc">Improve executive visibility, operational efficiency, and return on investment across the Teams product.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 4. FRAMEWORK TREE ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--text);">4</div>
     <h2>Framework at a Glance</h2>
   </div>
   <div class="card">
     <div class="ns-tree">
-      <!-- North Star Metric (root) -->
       <div class="ns-tree-root">
         <div class="ns-tree-box" style="background:linear-gradient(135deg,#1e40af,#3b82f6);">
           % of parent sessions leading to &ge;1 actionable insight
           <small>North Star Metric</small>
         </div>
       </div>
-
-      <!-- Connector down + branch line -->
       <div class="ns-tree-connector"></div>
       <div class="ns-tree-branch-line"></div>
-
-      <!-- Four input dimensions -->
       <div class="ns-tree-inputs">
         <div class="ns-tree-input">
           <div class="ns-tree-input-header" style="background:#059669;">
@@ -472,110 +559,102 @@
   </div>
 </section>
 
-<!-- ── NORTH STAR ── -->
+<!-- ── 5. MILESTONES ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:var(--north-star);">1</div>
-    <h2>North Star Statement</h2>
+    <div class="section-badge" style="background:var(--milestone);">5</div>
+    <h2>Milestones / Channel Sequencing</h2>
   </div>
-  <div class="card north-star-card">
-    <p class="objective"><strong>Objective:</strong> Enable parent accounts to view consolidated, actionable reporting across all child accounts for email, contact growth, SMS, social, and automations — reducing impersonation, improving executive visibility, and scaling Teams usage.</p>
-    <blockquote>"Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions."</blockquote>
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Each milestone adds a channel to the parent reporting experience. The order is driven by user pain, data readiness, and business impact.</p>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Channel</th>
+          <th>Why This Order</th>
+          <th>What Gets Built</th>
+          <th>Timing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="phase-pill phase-now">Phase 1</span></td>
+          <td><strong>Email</strong></td>
+          <td>Highest usage, largest impersonation pain</td>
+          <td>Aggregated email dashboard, campaign drill-down, child-account comparison, CSV export</td>
+          <td>Q1 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-now">Phase 2</span></td>
+          <td><strong>Contact Growth</strong></td>
+          <td>Strategic health &amp; audience trends</td>
+          <td>List growth roll-ups, engagement trends, audience health scores across child accounts</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-next">Phase 3</span></td>
+          <td><strong>SMS</strong></td>
+          <td>Revenue-driving channel</td>
+          <td>SMS delivery &amp; conversion roll-ups, child-level SMS drill-down</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-next">Phase 4</span></td>
+          <td><strong>Social</strong></td>
+          <td>Brand oversight for multi-location orgs</td>
+          <td>Cross-account post performance, engagement roll-ups, social campaign comparison</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-later">Phase 5</span></td>
+          <td><strong>Automations</strong></td>
+          <td>Deepens operational value</td>
+          <td>Workflow performance across accounts, lifecycle stage visibility, trigger analysis</td>
+          <td>TBD</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ── PROBLEM / OPPORTUNITY ── -->
+<!-- ── 6. REPORTING ARCHITECTURE ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:#dc2626;">!</div>
-    <h2>Problem / Opportunity</h2>
+    <div class="section-badge" style="background:#334155;">6</div>
+    <h2>Reporting Architecture Shift</h2>
   </div>
-  <div class="card" style="border-left:4px solid #dc2626;">
-    <ul class="impact-list">
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128683;</div>
-        <div>
-          <div class="impact-title">No cross-account visibility</div>
-          <div class="impact-desc">Parent-level users cannot easily analyze performance across child accounts. There is no consolidated view for strategic decision-making.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128260;</div>
-        <div>
-          <div class="impact-title">Painful manual workaround</div>
-          <div class="impact-desc">Current process: impersonate child accounts, export CSVs, manually aggregate — slow, error-prone, and unscalable.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128200;</div>
-        <div>
-          <div class="impact-title">Blocked enterprise growth</div>
-          <div class="impact-desc">Lack of parent-level reporting reduces enterprise adoption and strategic oversight, limiting multi-location expansion.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── GOALS ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:#0891b2;">&#10003;</div>
-    <h2>Goals</h2>
-  </div>
-  <div class="card" style="border-left:4px solid #0891b2;">
-    <ul class="impact-list">
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#128274;</div>
-        <div>
-          <div class="impact-title">Secure, scalable, role-aware reporting</div>
-          <div class="impact-desc">Consolidated, multi-account reporting that respects account hierarchies and user permissions.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#128269;</div>
-        <div>
-          <div class="impact-title">Roll-up + drill-down views</div>
-          <div class="impact-desc">Provide a framework that supports both portfolio-level roll-ups and campaign/team-level drill-downs.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#127942;</div>
-        <div>
-          <div class="impact-title">Executive visibility &amp; ROI</div>
-          <div class="impact-desc">Improve executive visibility, operational efficiency, and return on investment across the Teams product.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── NORTH STAR METRIC ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:var(--metric);">2</div>
-    <h2>North Star Metric</h2>
-  </div>
-  <div class="card metric-card">
-    <p class="metric-primary">
-      % of parent account sessions that lead to &ge;1 actionable insight or follow-up action across child accounts
-    </p>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">An "actionable insight" is any session where the user performs at least one of:</p>
-    <div class="examples-grid">
-      <div class="example-item">Drill-down into a campaign or child account</div>
-      <div class="example-item">Export via CSV or Report Builder</div>
-      <div class="example-item">Identify top-performing lists or campaigns</div>
-      <div class="example-item">Resolve bounce / unsubscribe issues</div>
-      <div class="example-item">Apply a recommendation from the reporting tool</div>
-      <div class="example-item">Share or schedule a report</div>
+  <div class="card" style="border:2px dashed #334155;background:linear-gradient(135deg,#f8fafc,#f1f5f9);">
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">Alongside channel expansion, we're restructuring how reporting works for Teams — moving from shared legacy surfaces to a dedicated, purpose-built experience.</p>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;">
+      <div style="background:#fef2f2;border-radius:0.75rem;padding:1rem;text-align:center;">
+        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#128683;</div>
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#dc2626;font-weight:700;margin-bottom:0.35rem;">Sunsetting</div>
+        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">"My Reports" (Legacy)</div>
+        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">Shared reporting surfaces that weren't built for multi-account use. Complex, confusing, and not scalable for Teams.</div>
+      </div>
+      <div style="padding:0 0.5rem;color:#94a3b8;font-size:1.25rem;">&#10132;</div>
+      <div style="background:#eff6ff;border-radius:0.75rem;padding:1rem;text-align:center;">
+        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#128295;</div>
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;font-weight:700;margin-bottom:0.35rem;">Building On</div>
+        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">Report Builder (New)</div>
+        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">The new Report Builder is the foundation. As we expand channels, Teams reporting is built on top of this modern tooling.</div>
+      </div>
+      <div style="padding:0 0.5rem;color:#94a3b8;font-size:1.25rem;">&#10132;</div>
+      <div style="background:#ecfdf5;border-radius:0.75rem;padding:1rem;text-align:center;">
+        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#127919;</div>
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#059669;font-weight:700;margin-bottom:0.35rem;">End State</div>
+        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">Dedicated Teams Reporting</div>
+        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">A clean, purpose-built reporting experience for parent accounts — simple, not complex, designed for multi-account oversight from day one.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW WE KNOW IT'S WORKING ── -->
+<!-- ── 7. HOW WE KNOW IT'S WORKING ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:var(--driver);">3</div>
+    <div class="section-badge" style="background:var(--driver);">7</div>
     <h2>How We Know It's Working</h2>
   </div>
   <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Six signals that tell us whether Teams reporting is delivering real value.</p>
@@ -613,111 +692,13 @@
   </div>
 </section>
 
-<!-- ── MILESTONES ── -->
+<!-- ── 8. BUSINESS IMPACT ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:var(--milestone);">4</div>
-    <h2>Milestones / Channel Sequencing</h2>
+    <div class="section-badge" style="background:var(--impact);">8</div>
+    <h2>Business Impact</h2>
   </div>
-  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Each milestone adds a channel to the parent reporting experience. The order is driven by user pain, data readiness, and business impact. Each phase unlocks new drivers above.</p>
-  <div class="card" style="overflow-x:auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>Phase</th>
-          <th>Channel</th>
-          <th>Why This Order</th>
-          <th>What Gets Built</th>
-          <th>Drivers It Activates</th>
-          <th>Timing</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="phase-pill phase-now">Phase 1</span></td>
-          <td><strong>Email</strong></td>
-          <td>Highest usage, largest impersonation pain</td>
-          <td>Aggregated email dashboard, campaign drill-down, child-account comparison, CSV export</td>
-          <td>Adoption, Drill-down, Exports, Impersonation &Delta;</td>
-          <td>Q1 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-now">Phase 2</span></td>
-          <td><strong>Contact Growth</strong></td>
-          <td>Strategic health &amp; audience trends</td>
-          <td>List growth roll-ups, engagement trends, audience health scores across child accounts</td>
-          <td>Adoption, Drill-down</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-next">Phase 3</span></td>
-          <td><strong>SMS</strong></td>
-          <td>Revenue-driving channel</td>
-          <td>SMS delivery &amp; conversion roll-ups, child-level SMS drill-down</td>
-          <td>Multi-channel coverage, Exports</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-next">Phase 4</span></td>
-          <td><strong>Social</strong></td>
-          <td>Brand oversight for multi-location orgs</td>
-          <td>Cross-account post performance, engagement roll-ups, social campaign comparison</td>
-          <td>Multi-channel coverage, Satisfaction</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-later">Phase 5</span></td>
-          <td><strong>Automations</strong></td>
-          <td>Deepens operational value</td>
-          <td>Workflow performance across accounts, lifecycle stage visibility, trigger analysis</td>
-          <td>All drivers reinforced</td>
-          <td>TBD</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ── REPORTING ARCHITECTURE ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:linear-gradient(135deg,#0f172a,#334155);">&#9881;</div>
-    <h2>Reporting Architecture Shift</h2>
-  </div>
-  <div class="card" style="border:2px dashed #334155;background:linear-gradient(135deg,#f8fafc,#f1f5f9);">
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">Alongside channel expansion, we're restructuring how reporting works for Teams — moving from shared legacy surfaces to a dedicated, purpose-built experience.</p>
-    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;">
-      <div style="background:#fef2f2;border-radius:0.75rem;padding:1rem;text-align:center;">
-        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#128683;</div>
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#dc2626;font-weight:700;margin-bottom:0.35rem;">Sunsetting</div>
-        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">"My Reports" (Legacy)</div>
-        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">Shared reporting surfaces that weren't built for multi-account use. Complex, confusing, and not scalable for Teams.</div>
-      </div>
-      <div style="padding:0 0.5rem;color:#94a3b8;font-size:1.25rem;">&#10132;</div>
-      <div style="background:#eff6ff;border-radius:0.75rem;padding:1rem;text-align:center;">
-        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#128295;</div>
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;font-weight:700;margin-bottom:0.35rem;">Building On</div>
-        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">Report Builder (New)</div>
-        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">The new Report Builder is the foundation. As we expand channels, Teams reporting is built on top of this modern tooling.</div>
-      </div>
-      <div style="padding:0 0.5rem;color:#94a3b8;font-size:1.25rem;">&#10132;</div>
-      <div style="background:#ecfdf5;border-radius:0.75rem;padding:1rem;text-align:center;">
-        <div style="font-size:1.25rem;margin-bottom:0.35rem;">&#127919;</div>
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:#059669;font-weight:700;margin-bottom:0.35rem;">End State</div>
-        <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">Dedicated Teams Reporting</div>
-        <div style="font-size:0.75rem;color:var(--muted);line-height:1.4;">A clean, purpose-built reporting experience for parent accounts — simple, not complex, designed for multi-account oversight from day one.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── BUSINESS IMPACT ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:var(--impact);">5</div>
-    <h2>Business Impact Alignment</h2>
-  </div>
-  <div class="card" style="margin-bottom:1.5rem;">
+  <div class="card">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
       <div style="background:linear-gradient(135deg,#ede9fe,#f5f3ff);border-radius:0.75rem;padding:1.25rem;">
         <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--impact);font-weight:700;margin-bottom:0.5rem;">Gross Adds Impact</div>
@@ -739,37 +720,12 @@
       </div>
     </div>
   </div>
-  <div class="card">
-    <ul class="impact-list">
-      <li class="impact-item">
-        <div class="impact-icon">&#128200;</div>
-        <div>
-          <div class="impact-title">Sales &amp; Enterprise Growth</div>
-          <div class="impact-desc">Consolidated reporting becomes a differentiator in enterprise demos, accelerating multi-location deal velocity and driving gross adds.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon">&#128176;</div>
-        <div>
-          <div class="impact-title">Retention &amp; ROI</div>
-          <div class="impact-desc">Data-backed insights improve campaign performance across child accounts. Parent accounts see clear ROI, reducing churn and supporting renewal-driven ASP growth.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon">&#9889;</div>
-        <div>
-          <div class="impact-title">Operational Efficiency</div>
-          <div class="impact-desc">Reduced impersonation, fewer manual CSV exports, fewer support tickets. Time savings reinvested into campaign optimization, improving outcomes that justify expansion.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
 </section>
 
-<!-- ── AI EVOLUTION ── -->
+<!-- ── 9. AI EVOLUTION ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:linear-gradient(135deg,#0ea5e9,#8b5cf6);">&#10024;</div>
+    <div class="section-badge" style="background:linear-gradient(135deg,#0ea5e9,#8b5cf6);">9</div>
     <h2>AI Evolution — Across All Phases</h2>
   </div>
   <div class="card" style="border:2px dashed #a78bfa;background:linear-gradient(135deg,#faf5ff,#f0f9ff);">
@@ -803,42 +759,10 @@
   </div>
 </section>
 
-<!-- ── SUCCESS METRICS ── -->
+<!-- ── 10. ANTI-GOALS ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:#0e7490;">6</div>
-    <h2>Success Metrics (Initiative-Level)</h2>
-  </div>
-  <div class="card" style="border-left:4px solid #0e7490;">
-    <table>
-      <thead>
-        <tr>
-          <th>Metric</th>
-          <th>What It Measures</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>% reduction in reporting-driven impersonation</strong></td>
-          <td>Whether parent users stop impersonating child accounts to pull reports</td>
-        </tr>
-        <tr>
-          <td><strong>Adoption of roll-up dashboards by parent accounts</strong></td>
-          <td>Whether the new reporting surfaces are being used regularly</td>
-        </tr>
-        <tr>
-          <td><strong>% reduction in reporting-related support tickets</strong></td>
-          <td>Whether self-service reporting reduces support burden</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ── ANTI-GOALS ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:var(--anti);">7</div>
+    <div class="section-badge" style="background:var(--anti);">10</div>
     <h2>Anti-Goals (Explicit Non-Goals)</h2>
   </div>
   <div class="card anti-goals">
@@ -851,7 +775,6 @@
     </ul>
   </div>
 </section>
-
 
 </div>
 </body>
