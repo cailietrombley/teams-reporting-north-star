@@ -256,88 +256,129 @@
     font-weight: 700;
   }
 
-  /* ── Visual Diagram (pipeline) ── */
-  .pipeline {
-    display: flex;
-    align-items: flex-start;
-    gap: 0;
-    padding: 1.25rem 0 0.5rem;
-    position: relative;
+  /* ── North Star Tree ── */
+  .ns-tree {
+    padding: 1rem 0 0.5rem;
   }
 
-  .pipeline-step {
-    flex: 1;
+  .ns-tree-root {
     text-align: center;
-    position: relative;
-  }
-
-  .pipeline-dot {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    margin: 0 auto 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.1rem;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-
-  .pipeline-step:not(:last-child) .pipeline-dot::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    width: calc(100% - 0.5rem);
-    height: 2px;
-    background: #cbd5e1;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-
-  .pipeline-dot.c-blue { background: #2563eb; }
-  .pipeline-dot.c-green { background: #059669; }
-  .pipeline-dot.c-amber { background: #d97706; }
-  .pipeline-dot.c-orange { background: #ea580c; }
-  .pipeline-dot.c-purple { background: #7c3aed; }
-
-  .pipeline-label {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--text);
     margin-bottom: 0.25rem;
   }
 
-  .pipeline-detail {
+  .ns-tree-box {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 0.6rem;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  .ns-tree-box small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.7rem;
+    opacity: 0.85;
+    margin-top: 0.2rem;
+  }
+
+  .ns-tree-connector {
+    text-align: center;
+    height: 2rem;
+    position: relative;
+  }
+
+  .ns-tree-connector::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #cbd5e1;
+  }
+
+  .ns-tree-branch-line {
+    height: 1.5rem;
+    position: relative;
+    margin: 0 2rem;
+  }
+
+  .ns-tree-branch-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 50%;
+    background: #cbd5e1;
+  }
+
+  .ns-tree-branch-line::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 12.5%;
+    width: 75%;
+    height: 2px;
+    background: #cbd5e1;
+  }
+
+  .ns-tree-inputs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .ns-tree-input {
+    position: relative;
+    text-align: center;
+  }
+
+  .ns-tree-input::before {
+    content: "";
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    width: 2px;
+    height: 0.75rem;
+    background: #cbd5e1;
+  }
+
+  .ns-tree-input-header {
+    padding: 0.5rem 0.4rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 700;
     font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.4;
-    padding: 0 0.25rem;
+    margin-bottom: 0.5rem;
   }
 
-  .pipeline-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    justify-content: center;
-    margin-top: 0.35rem;
-  }
-
-  .pipeline-tag {
-    background: #f1f5f9;
-    color: var(--muted);
-    padding: 0.15rem 0.45rem;
-    border-radius: 1rem;
+  .ns-tree-input-header small {
+    display: block;
+    font-weight: 400;
     font-size: 0.65rem;
-    font-weight: 600;
+    opacity: 0.85;
+    margin-top: 0.15rem;
   }
 
-  .pipeline-tag.active {
-    background: #dbeafe;
-    color: #2563eb;
+  .ns-tree-initiatives {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .ns-tree-init {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.35rem;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.3;
   }
 
   @media (max-width: 640px) {
@@ -367,31 +408,65 @@
     <h2>Framework at a Glance</h2>
   </div>
   <div class="card">
-    <div class="pipeline">
-      <div class="pipeline-step">
-        <div class="pipeline-dot c-blue">&#9733;</div>
-        <div class="pipeline-label">North Star</div>
-        <div class="pipeline-detail">Actionable cross-account insights that replace manual work</div>
+    <div class="ns-tree">
+      <!-- North Star Metric (root) -->
+      <div class="ns-tree-root">
+        <div class="ns-tree-box" style="background:linear-gradient(135deg,#1e40af,#3b82f6);">
+          % of parent sessions leading to &ge;1 actionable insight
+          <small>North Star Metric</small>
+        </div>
       </div>
-      <div class="pipeline-step">
-        <div class="pipeline-dot c-green">&#9678;</div>
-        <div class="pipeline-label">Metric</div>
-        <div class="pipeline-detail">% of parent sessions leading to &ge;1 follow-up action</div>
-      </div>
-      <div class="pipeline-step">
-        <div class="pipeline-dot c-amber">&#9632;</div>
-        <div class="pipeline-label">Drivers</div>
-        <div class="pipeline-detail">Adoption, engagement &amp; operational efficiency</div>
-      </div>
-      <div class="pipeline-step">
-        <div class="pipeline-dot c-orange">&#9654;</div>
-        <div class="pipeline-label">Milestones</div>
-        <div class="pipeline-detail">Email &rarr; Contacts &rarr; SMS &rarr; Social &rarr; Automations</div>
-      </div>
-      <div class="pipeline-step">
-        <div class="pipeline-dot c-purple">&#10004;</div>
-        <div class="pipeline-label">Impact</div>
-        <div class="pipeline-detail">Gross Adds &amp; ASP Growth</div>
+
+      <!-- Connector down + branch line -->
+      <div class="ns-tree-connector"></div>
+      <div class="ns-tree-branch-line"></div>
+
+      <!-- Four input dimensions -->
+      <div class="ns-tree-inputs">
+        <div class="ns-tree-input">
+          <div class="ns-tree-input-header" style="background:#059669;">
+            Adoption
+            <small>Breadth of usage</small>
+          </div>
+          <div class="ns-tree-initiatives">
+            <div class="ns-tree-init">Roll-up dashboard usage by parent accounts</div>
+            <div class="ns-tree-init">Onboarding &amp; activation of reporting features</div>
+            <div class="ns-tree-init">Multi-channel coverage (Email, SMS, Social)</div>
+          </div>
+        </div>
+        <div class="ns-tree-input">
+          <div class="ns-tree-input-header" style="background:#d97706;">
+            Engagement
+            <small>Depth of exploration</small>
+          </div>
+          <div class="ns-tree-initiatives">
+            <div class="ns-tree-init">Campaign &amp; child-account drill-downs</div>
+            <div class="ns-tree-init">Report Builder &amp; CSV exports</div>
+            <div class="ns-tree-init">Contact growth &amp; list health analysis</div>
+          </div>
+        </div>
+        <div class="ns-tree-input">
+          <div class="ns-tree-input-header" style="background:#7c3aed;">
+            Efficiency
+            <small>Operational improvement</small>
+          </div>
+          <div class="ns-tree-initiatives">
+            <div class="ns-tree-init">Impersonation reduction for reporting</div>
+            <div class="ns-tree-init">Sunset "My Reports" legacy system</div>
+            <div class="ns-tree-init">Fewer reporting-related support tickets</div>
+          </div>
+        </div>
+        <div class="ns-tree-input">
+          <div class="ns-tree-input-header" style="background:#dc2626;">
+            Satisfaction
+            <small>Perceived value</small>
+          </div>
+          <div class="ns-tree-initiatives">
+            <div class="ns-tree-init">Pendo &amp; qualitative feedback scores</div>
+            <div class="ns-tree-init">Simple, non-complex experience</div>
+            <div class="ns-tree-init">AI insights &amp; conversational reporting</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
