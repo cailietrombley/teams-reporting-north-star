@@ -139,6 +139,94 @@
     color: var(--accent);
     font-weight: 700;
   }
+
+  .content-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .section-content {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .resource-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    margin-bottom: 0.75rem;
+  }
+
+  .resource-link:hover {
+    border-color: var(--accent);
+    background: rgba(96, 165, 250, 0.1);
+    transform: translateX(4px);
+  }
+
+  .resource-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .resource-info {
+    flex: 1;
+  }
+
+  .resource-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .resource-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .resource-arrow {
+    color: var(--accent);
+    font-size: 1.25rem;
+  }
+
+  .placeholder {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px dashed var(--border);
+    border-radius: 0.75rem;
+    color: var(--muted);
+  }
 </style>
 </head>
 <body>
@@ -153,22 +241,83 @@
     <p class="subtitle">Aggregated dashboards and campaign analytics for parent accounts</p>
   </header>
 
-  <div class="coming-soon">
-    <div class="coming-soon-icon">🚧</div>
-    <h2>Page Under Construction</h2>
-    <p>This page will contain detailed requirements, user stories, wireframes, and technical specifications for Email Reporting.</p>
+  <div class="content-grid">
+    <!-- One Pager Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📄</div>
+        <h2 class="section-title">One Pager</h2>
+      </div>
+      <div class="section-content">
+        <a href="https://ctct.atlassian.net/wiki/spaces/PDM/pages/14403403856/Overview+Email+Drill+Down+Reporting+Teams" target="_blank" class="resource-link">
+          <div class="resource-icon">📝</div>
+          <div class="resource-info">
+            <div class="resource-title">Overview: Email Drill-Down Reporting (Teams)</div>
+            <div class="resource-desc">Executive summary on Confluence</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+      </div>
+    </section>
 
-    <div class="placeholder-list">
-      <h3>Coming Soon:</h3>
-      <ul>
-        <li>User stories and requirements</li>
-        <li>Dashboard mockups and wireframes</li>
-        <li>Technical implementation plan</li>
-        <li>Data model and API specifications</li>
-        <li>Success metrics and KPIs</li>
-        <li>QA test plans</li>
-      </ul>
-    </div>
+    <!-- PRD Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2 class="section-title">Product Requirements Document (PRD)</h2>
+      </div>
+      <div class="section-content">
+        <a href="https://ctct.atlassian.net/wiki/spaces/PDM/pages/14412775464/PRD+Email+Drill+Down+Reporting" target="_blank" class="resource-link">
+          <div class="resource-icon">📋</div>
+          <div class="resource-info">
+            <div class="resource-title">PRD: Email Drill-Down Reporting</div>
+            <div class="resource-desc">Detailed requirements and specifications on Confluence</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Prototype & Research Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">🔗</div>
+        <h2 class="section-title">Prototype & Research</h2>
+      </div>
+      <div class="section-content">
+        <!-- Placeholder for future links -->
+        <a href="#" class="resource-link" style="pointer-events: none; opacity: 0.5;">
+          <div class="resource-icon">🎨</div>
+          <div class="resource-info">
+            <div class="resource-title">Figma Prototype</div>
+            <div class="resource-desc">Interactive wireframes and mockups</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+
+        <a href="#" class="resource-link" style="pointer-events: none; opacity: 0.5;">
+          <div class="resource-icon">📊</div>
+          <div class="resource-info">
+            <div class="resource-title">User Research</div>
+            <div class="resource-desc">Customer interviews and feedback summary</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+
+        <a href="#" class="resource-link" style="pointer-events: none; opacity: 0.5;">
+          <div class="resource-icon">📈</div>
+          <div class="resource-info">
+            <div class="resource-title">Analytics Dashboard</div>
+            <div class="resource-desc">Current usage data and metrics</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+
+        <div class="placeholder" style="margin-top: 1rem;">
+          <p style="font-size: 0.85rem;">Links will be added as resources become available</p>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 </body>
