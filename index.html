@@ -437,6 +437,72 @@
   </div>
 </section>
 
+<!-- ── PROBLEM / OPPORTUNITY ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:#dc2626;">!</div>
+    <h2>Problem / Opportunity</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128683;</div>
+        <div>
+          <div class="impact-title">No cross-account visibility</div>
+          <div class="impact-desc">Parent-level users cannot easily analyze performance across child accounts. There is no consolidated view for strategic decision-making.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128260;</div>
+        <div>
+          <div class="impact-title">Painful manual workaround</div>
+          <div class="impact-desc">Current process: impersonate child accounts, export CSVs, manually aggregate — slow, error-prone, and unscalable.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128200;</div>
+        <div>
+          <div class="impact-title">Blocked enterprise growth</div>
+          <div class="impact-desc">Lack of parent-level reporting reduces enterprise adoption and strategic oversight, limiting multi-location expansion.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── GOALS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:#0891b2;">&#10003;</div>
+    <h2>Goals</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #0891b2;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128274;</div>
+        <div>
+          <div class="impact-title">Secure, scalable, role-aware reporting</div>
+          <div class="impact-desc">Consolidated, multi-account reporting that respects account hierarchies and user permissions.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128269;</div>
+        <div>
+          <div class="impact-title">Roll-up + drill-down views</div>
+          <div class="impact-desc">Provide a framework that supports both portfolio-level roll-ups and campaign/team-level drill-downs.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#127942;</div>
+        <div>
+          <div class="impact-title">Executive visibility &amp; ROI</div>
+          <div class="impact-desc">Improve executive visibility, operational efficiency, and return on investment across the Teams product.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
 <!-- ── NORTH STAR METRIC ── -->
 <section class="section">
   <div class="section-header">
@@ -609,10 +675,46 @@
   </div>
 </section>
 
+<!-- ── SUCCESS METRICS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:#0e7490;">6</div>
+    <h2>Success Metrics (Initiative-Level)</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #0e7490;">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>What It Measures</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>% reduction in reporting-driven impersonation</strong></td>
+          <td>Whether parent users stop impersonating child accounts to pull reports</td>
+          <td><span class="target-pill">&ge;40%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Adoption of roll-up dashboards by parent accounts</strong></td>
+          <td>Whether the new reporting surfaces are being used regularly</td>
+          <td><span class="target-pill">&ge;50% weekly</span></td>
+        </tr>
+        <tr>
+          <td><strong>% reduction in reporting-related support tickets</strong></td>
+          <td>Whether self-service reporting reduces support burden</td>
+          <td><span class="target-pill">&ge;30%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <!-- ── ANTI-GOALS ── -->
 <section class="section">
   <div class="section-header">
-    <div class="section-badge" style="background:var(--anti);">6</div>
+    <div class="section-badge" style="background:var(--anti);">7</div>
     <h2>Anti-Goals (Explicit Non-Goals)</h2>
   </div>
   <div class="card anti-goals">
@@ -623,6 +725,57 @@
       <li>Custom report builder from scratch — leverage existing Report Builder infrastructure</li>
       <li>Cross-org benchmarking — comparing between unrelated parent accounts is out of scope</li>
     </ul>
+  </div>
+</section>
+
+<!-- ── RELATED DOCUMENTS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:#475569;">8</div>
+    <h2>Related Documents</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #475569;">
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Author</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RFC: Teams aggregated reporting driven by Reporting-svc</strong></td>
+          <td>Zack Stair</td>
+          <td><span class="phase-pill phase-now">RFC</span></td>
+        </tr>
+        <tr>
+          <td><strong>[Overview] Email Drill Down Reporting &ndash; Teams</strong></td>
+          <td>Cailie Trombley</td>
+          <td><span class="phase-pill phase-now">Overview</span></td>
+        </tr>
+        <tr>
+          <td><strong>Competitor Research for Teams Reporting</strong></td>
+          <td>Cailie Trombley</td>
+          <td><span class="phase-pill phase-next">Research</span></td>
+        </tr>
+        <tr>
+          <td><strong>[One pager] Teams Dashboard</strong></td>
+          <td>Catherine Hamet</td>
+          <td><span class="phase-pill phase-next">One Pager</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reporting &ndash; Future Vision / Abilities (Concepts)</strong></td>
+          <td>Jonathan Poon</td>
+          <td><span class="phase-pill phase-later">Vision</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reporting Data Exporter / Report Builder</strong></td>
+          <td>Jonathan Poon</td>
+          <td><span class="phase-pill phase-later">Feature</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
