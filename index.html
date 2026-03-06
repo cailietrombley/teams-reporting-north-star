@@ -63,118 +63,78 @@
     border-radius: 1rem;
     padding: 2.5rem;
     margin-bottom: 3rem;
+    text-align: center;
     animation: fadeInUp 0.8s ease-out 0.3s backwards;
   }
 
-  .north-star-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
-    color: white;
-    padding: 0.4rem 1.25rem;
-    border-radius: 2rem;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  .north-star-question {
+    font-size: 1.1rem;
+    color: var(--muted);
     margin-bottom: 1.5rem;
-  }
-
-  .north-star-vision {
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--accent);
-    font-style: italic;
-    line-height: 1.6;
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px dashed var(--border);
   }
 
   .north-star-metric {
     background: linear-gradient(135deg, #1e40af, #3b82f6);
     color: white;
-    padding: 1.5rem 2rem;
+    padding: 2rem 2.5rem;
     border-radius: 0.75rem;
-    text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
   }
 
   .north-star-metric-value {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
     line-height: 1.5;
     margin-bottom: 0.5rem;
   }
 
   .north-star-metric-label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     opacity: 0.9;
   }
 
-  .north-star-pillars {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .pillar {
-    background: rgba(96, 165, 250, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .pillar-title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-    color: var(--text);
-  }
-
-  .pillar-subtitle {
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  .view-full-framework {
-    text-align: center;
-  }
-
-  .view-full-framework a {
+  .view-framework-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--accent);
     color: var(--accent);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
     text-decoration: none;
-    font-size: 0.9rem;
     font-weight: 600;
-    transition: gap 0.2s;
+    transition: all 0.2s;
   }
 
-  .view-full-framework a:hover {
+  .view-framework-btn:hover {
+    background: rgba(96, 165, 250, 0.2);
     gap: 0.75rem;
+    transform: translateY(-2px);
   }
 
-  /* Explore Section */
-  .explore-header {
-    text-align: center;
+  /* Roadmap Section */
+  .roadmap-section {
     margin-bottom: 2rem;
   }
 
-  .explore-header h2 {
-    font-size: 1.75rem;
+  .roadmap-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .roadmap-header h2 {
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
 
-  .explore-header p {
+  .roadmap-header p {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .tiles {
@@ -318,53 +278,28 @@
     <p>Consolidated parent account reporting across all channels</p>
   </div>
 
-  <!-- North Star Framework Summary -->
+  <!-- North Star -->
   <section class="north-star-section">
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem;">North Star + Measurement Framework</h2>
-      <p style="color: var(--muted); max-width: 700px; margin: 0 auto; line-height: 1.6;">We're building consolidated reporting for Teams parent accounts — starting with Email, expanding across multiple channels — to drive gross adds and ASP growth.</p>
-    </div>
-
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <div class="north-star-badge">⭐ North Star Metric</div>
-    </div>
+    <div class="north-star-question">What's our North Star?</div>
 
     <div class="north-star-metric">
       <div class="north-star-metric-value">% of parent sessions leading to ≥1 actionable insight</div>
       <div class="north-star-metric-label">Actionable insights include: drill-downs, exports, issue resolution, sharing reports, or applying recommendations</div>
     </div>
 
-    <div class="north-star-pillars">
-      <div class="pillar">
-        <div class="pillar-title">Adoption</div>
-        <div class="pillar-subtitle">Breadth of usage</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-title">Engagement</div>
-        <div class="pillar-subtitle">Depth of exploration</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-title">Efficiency</div>
-        <div class="pillar-subtitle">Operational improvement</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-title">Satisfaction</div>
-        <div class="pillar-subtitle">Perceived value</div>
-      </div>
-    </div>
-
-    <div class="view-full-framework">
-      <a href="north-star-framework.html">View Full Framework →</a>
-    </div>
+    <a href="north-star-framework.html" class="view-framework-btn">
+      View Full Framework →
+    </a>
   </section>
 
-  <!-- 2026 Roadmap -->
-  <div class="explore-header">
-    <h2>2026 Roadmap</h2>
-    <p>Five key initiatives driving consolidated parent account reporting</p>
-  </div>
+  <!-- Teams Reporting Roadmap -->
+  <section class="roadmap-section">
+    <div class="roadmap-header">
+      <h2>Teams Reporting Roadmap</h2>
+      <p>Building consolidated parent account reporting — starting with Email, expanding across multiple channels</p>
+    </div>
 
-  <div class="tiles">
+    <div class="tiles">
     <!-- Email Reporting -->
     <a href="email-reporting.html" class="tile">
       <span class="tile-badge badge-phase1">Phase 1</span>
@@ -404,7 +339,8 @@
       <div class="tile-title">Automations</div>
       <div class="tile-desc">Workflow performance, lifecycle visibility, and trigger analysis</div>
     </a>
-  </div>
+    </div>
+  </section>
 </div>
 </body>
 </html>
