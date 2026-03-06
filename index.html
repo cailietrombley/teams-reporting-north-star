@@ -256,77 +256,88 @@
     font-weight: 700;
   }
 
-  /* ── Visual Diagram (horizontal flow) ── */
-  .diagram {
+  /* ── Visual Diagram (pipeline) ── */
+  .pipeline {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 0;
-    padding: 1rem 0;
-  }
-
-  .diagram-node {
-    flex: 1;
-    padding: 0.75rem 0.6rem;
-    text-align: center;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 1.25rem 0 0.5rem;
     position: relative;
   }
 
-  .diagram-node:first-child { border-radius: 0.6rem 0 0 0.6rem; }
-  .diagram-node:last-child { border-radius: 0 0.6rem 0.6rem 0; }
-
-  .diagram-node h3 {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.8;
-    margin-bottom: 0.25rem;
+  .pipeline-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
   }
 
-  .diagram-node p {
-    font-size: 0.7rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .diagram-node.ns { background: #2563eb; }
-  .diagram-node.mt { background: #059669; }
-  .diagram-node.dr { background: #d97706; }
-  .diagram-node.ms { background: #ea580c; }
-  .diagram-node.bi { background: #7c3aed; }
-
-  .diagram-chevron {
-    width: 0.75rem;
-    flex-shrink: 0;
+  .pipeline-dot {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    margin: 0 auto 0.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #94a3b8;
-    font-size: 0.8rem;
-    background: var(--card-bg);
+    color: white;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
-  .flow-tags {
+  .pipeline-step:not(:last-child) .pipeline-dot::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: calc(100% - 0.5rem);
+    height: 2px;
+    background: #cbd5e1;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  .pipeline-dot.c-blue { background: #2563eb; }
+  .pipeline-dot.c-green { background: #059669; }
+  .pipeline-dot.c-amber { background: #d97706; }
+  .pipeline-dot.c-orange { background: #ea580c; }
+  .pipeline-dot.c-purple { background: #7c3aed; }
+
+  .pipeline-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .pipeline-detail {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.4;
+    padding: 0 0.25rem;
+  }
+
+  .pipeline-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.2rem;
+    gap: 0.25rem;
     justify-content: center;
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
   }
 
-  .flow-tag {
-    background: rgba(255,255,255,0.25);
-    padding: 0.1rem 0.35rem;
+  .pipeline-tag {
+    background: #f1f5f9;
+    color: var(--muted);
+    padding: 0.15rem 0.45rem;
     border-radius: 1rem;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     font-weight: 600;
   }
 
-  .flow-tag.active {
-    background: rgba(255,255,255,0.45);
+  .pipeline-tag.active {
+    background: #dbeafe;
+    color: #2563eb;
   }
 
   @media (max-width: 640px) {
@@ -355,39 +366,48 @@
     <div class="section-badge" style="background:var(--text);">&#9670;</div>
     <h2>Framework at a Glance</h2>
   </div>
-  <div class="card" style="overflow:hidden;padding:0.75rem;">
-    <div class="diagram">
-      <div class="diagram-node ns">
-        <h3>North Star</h3>
-        <p>Actionable cross-account insights</p>
+  <div class="card">
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="pipeline-dot c-blue">&#9733;</div>
+        <div class="pipeline-label">North Star</div>
+        <div class="pipeline-detail">Actionable cross-account insights that replace manual work</div>
       </div>
-      <div class="diagram-chevron">&#9654;</div>
-      <div class="diagram-node mt">
-        <h3>Metric</h3>
-        <p>% sessions &rarr; action</p>
-        <div class="flow-tags"><span class="flow-tag">60% target</span></div>
+      <div class="pipeline-step">
+        <div class="pipeline-dot c-green">&#9678;</div>
+        <div class="pipeline-label">Metric</div>
+        <div class="pipeline-detail">% of parent sessions leading to &ge;1 follow-up action</div>
+        <div class="pipeline-tags"><span class="pipeline-tag active">Target: 60%</span></div>
       </div>
-      <div class="diagram-chevron">&#9654;</div>
-      <div class="diagram-node dr">
-        <h3>Drivers</h3>
-        <p>6 KPIs</p>
-        <div class="flow-tags"><span class="flow-tag">Adoption</span><span class="flow-tag">Depth</span><span class="flow-tag">Exports</span></div>
-      </div>
-      <div class="diagram-chevron">&#9654;</div>
-      <div class="diagram-node ms">
-        <h3>Milestones</h3>
-        <div class="flow-tags">
-          <span class="flow-tag active">Email</span>
-          <span class="flow-tag active">Contacts</span>
-          <span class="flow-tag">SMS</span>
-          <span class="flow-tag">Social</span>
-          <span class="flow-tag">Auto</span>
+      <div class="pipeline-step">
+        <div class="pipeline-dot c-amber">&#9632;</div>
+        <div class="pipeline-label">Drivers</div>
+        <div class="pipeline-detail">6 KPIs that move the metric</div>
+        <div class="pipeline-tags">
+          <span class="pipeline-tag">Adoption</span>
+          <span class="pipeline-tag">Depth</span>
+          <span class="pipeline-tag">Exports</span>
+          <span class="pipeline-tag">Impersonation</span>
+          <span class="pipeline-tag">Multi-channel</span>
+          <span class="pipeline-tag">Satisfaction</span>
         </div>
       </div>
-      <div class="diagram-chevron">&#9654;</div>
-      <div class="diagram-node bi">
-        <h3>Impact</h3>
-        <p>Gross Adds &amp; ASP Growth</p>
+      <div class="pipeline-step">
+        <div class="pipeline-dot c-orange">&#9654;</div>
+        <div class="pipeline-label">Milestones</div>
+        <div class="pipeline-detail">Channel sequencing</div>
+        <div class="pipeline-tags">
+          <span class="pipeline-tag active">Email</span>
+          <span class="pipeline-tag active">Contacts</span>
+          <span class="pipeline-tag">SMS</span>
+          <span class="pipeline-tag">Social</span>
+          <span class="pipeline-tag">Automations</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-dot c-purple">&#10004;</div>
+        <div class="pipeline-label">Impact</div>
+        <div class="pipeline-detail">Gross Adds &amp; ASP Growth</div>
       </div>
     </div>
   </div>
