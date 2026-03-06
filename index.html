@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams Reporting — North Star Framework</title>
+<style>
+  :root {
+    --north-star: #1a56db;
+    --metric: #047857;
+    --driver: #b45309;
+    --milestone: #c2410c;
+    --impact: #7c3aed;
+    --anti: #6b7280;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  header .subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .north-star-card {
+    border-left: 4px solid var(--north-star);
+    background: linear-gradient(135deg, #eff6ff, #ffffff);
+  }
+
+  .north-star-card blockquote {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--north-star);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .objective {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .metric-card {
+    border-left: 4px solid var(--metric);
+  }
+
+  .metric-primary {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--metric);
+    margin-bottom: 1rem;
+  }
+
+  .metric-target {
+    display: inline-block;
+    background: #ecfdf5;
+    color: var(--metric);
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .example-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .example-item::before {
+    content: "→";
+    color: var(--metric);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  table tr:last-child td { border-bottom: none; }
+
+  .target-pill {
+    display: inline-block;
+    background: #fef3c7;
+    color: var(--driver);
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .phase-pill {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .phase-now { background: #dcfce7; color: #166534; }
+  .phase-next { background: #fef3c7; color: #92400e; }
+  .phase-later { background: #f3e8ff; color: #6b21a8; }
+
+  .impact-list {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .impact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .impact-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    background: #f5f3ff;
+  }
+
+  .impact-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .impact-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .anti-goals {
+    border-left: 4px solid var(--anti);
+  }
+
+  .anti-goals ul {
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .anti-goals li {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .anti-goals li::before {
+    content: "✕ ";
+    color: #ef4444;
+    font-weight: 700;
+  }
+
+  /* ── Visual Diagram ── */
+  .diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 2rem 1rem;
+  }
+
+  .diagram-box {
+    width: 480px;
+    max-width: 100%;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+
+  .diagram-box h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    margin-bottom: 0.35rem;
+  }
+
+  .diagram-box p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .diagram-box.ns { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+  .diagram-box.mt { background: linear-gradient(135deg, #065f46, #10b981); }
+  .diagram-box.dr { background: linear-gradient(135deg, #92400e, #f59e0b); }
+  .diagram-box.ms { background: linear-gradient(135deg, #9a3412, #f97316); }
+  .diagram-box.bi { background: linear-gradient(135deg, #5b21b6, #8b5cf6); }
+
+  .diagram-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 2rem;
+    position: relative;
+  }
+
+  .diagram-arrow::before {
+    content: "";
+    width: 2px;
+    height: 1.25rem;
+    background: #94a3b8;
+  }
+
+  .diagram-arrow::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #94a3b8;
+  }
+
+  .driver-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .driver-tag {
+    background: rgba(255,255,255,0.25);
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .milestone-tags {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .milestone-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .milestone-tag.active {
+    background: rgba(255,255,255,0.4);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 1rem; }
+    .examples-grid { grid-template-columns: 1fr; }
+    .diagram-box { width: 100%; }
+  }
+
+  @media print {
+    body { padding: 0; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Teams Reporting — North Star Framework</h1>
+  <p class="subtitle">Product Strategy &amp; Measurement Framework &middot; March 2026</p>
+</header>
+
+<!-- ── VISUAL DIAGRAM ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--text);">&#9670;</div>
+    <h2>Framework at a Glance</h2>
+  </div>
+  <div class="card" style="overflow:hidden;">
+    <div class="diagram">
+      <div class="diagram-box ns">
+        <h3>North Star</h3>
+        <p>Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions.</p>
+      </div>
+      <div class="diagram-arrow"></div>
+      <div class="diagram-box mt">
+        <h3>North Star Metric</h3>
+        <p>% of parent sessions leading to &ge;1 actionable insight or follow-up</p>
+        <div class="driver-tags">
+          <span class="driver-tag">Target: 60% within 6 mo</span>
+        </div>
+      </div>
+      <div class="diagram-arrow"></div>
+      <div class="diagram-box dr">
+        <h3>Supporting Drivers</h3>
+        <p>Adoption &middot; Drill-down Depth &middot; Exports &middot; Impersonation &Delta; &middot; Multi-Channel Use &middot; Satisfaction</p>
+        <div class="driver-tags">
+          <span class="driver-tag">6 KPIs</span>
+          <span class="driver-tag">Each with target</span>
+        </div>
+      </div>
+      <div class="diagram-arrow"></div>
+      <div class="diagram-box ms">
+        <h3>Milestones &amp; Phases</h3>
+        <div class="milestone-tags">
+          <span class="milestone-tag active">Email</span>
+          <span class="milestone-tag active">Contacts</span>
+          <span class="milestone-tag">Social</span>
+          <span class="milestone-tag">SMS</span>
+          <span class="milestone-tag">Revenue+</span>
+        </div>
+      </div>
+      <div class="diagram-arrow"></div>
+      <div class="diagram-box bi">
+        <h3>Business Impact</h3>
+        <p>Enterprise Growth &middot; Retention &amp; ROI &middot; Operational Efficiency</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NORTH STAR ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--north-star);">1</div>
+    <h2>North Star Statement</h2>
+  </div>
+  <div class="card north-star-card">
+    <p class="objective"><strong>Objective:</strong> Enable parent accounts to view consolidated, actionable reporting across all child accounts for email, contact growth, social, SMS, and other channels — reducing impersonation, improving executive visibility, and scaling Teams usage.</p>
+    <blockquote>"Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions."</blockquote>
+  </div>
+</section>
+
+<!-- ── NORTH STAR METRIC ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--metric);">2</div>
+    <h2>North Star Metric</h2>
+  </div>
+  <div class="card metric-card">
+    <p class="metric-primary">
+      % of parent account sessions that lead to &ge;1 actionable insight or follow-up action across child accounts
+      <span class="metric-target">Target: 60% at 6 mo</span>
+    </p>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">An "actionable insight" is any session where the user performs at least one of:</p>
+    <div class="examples-grid">
+      <div class="example-item">Drill-down into a campaign or child account</div>
+      <div class="example-item">Export via CSV or Report Builder</div>
+      <div class="example-item">Identify top-performing lists or campaigns</div>
+      <div class="example-item">Resolve bounce / unsubscribe issues</div>
+      <div class="example-item">Apply a recommendation from the reporting tool</div>
+      <div class="example-item">Share or schedule a report</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUPPORTING DRIVERS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--driver);">3</div>
+    <h2>Supporting Metrics / Drivers</h2>
+  </div>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Driver</th>
+          <th>KPI / Metric</th>
+          <th>Target</th>
+          <th>Unlocked By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Roll-up dashboard adoption</strong></td>
+          <td>% of parent accounts using roll-up dashboards weekly</td>
+          <td><span class="target-pill">&ge;50% weekly</span></td>
+          <td><span class="phase-pill phase-now">Email</span></td>
+        </tr>
+        <tr>
+          <td><strong>Drill-down engagement</strong></td>
+          <td>Avg # of campaign/child drill-downs per parent session</td>
+          <td><span class="target-pill">&ge;3 per session</span></td>
+          <td><span class="phase-pill phase-now">Email</span></td>
+        </tr>
+        <tr>
+          <td><strong>Report exports</strong></td>
+          <td># of CSV / Report Builder exports per week</td>
+          <td><span class="target-pill">2&times; baseline</span></td>
+          <td><span class="phase-pill phase-now">Email</span></td>
+        </tr>
+        <tr>
+          <td><strong>Impersonation reduction</strong></td>
+          <td>% reduction in impersonation events</td>
+          <td><span class="target-pill">&ge;40% &Delta;</span></td>
+          <td><span class="phase-pill phase-now">Email</span></td>
+        </tr>
+        <tr>
+          <td><strong>Multi-channel coverage</strong></td>
+          <td>% of parent sessions interacting with &ge;2 channels</td>
+          <td><span class="target-pill">&ge;30%</span></td>
+          <td><span class="phase-pill phase-next">Social</span></td>
+        </tr>
+        <tr>
+          <td><strong>User satisfaction</strong></td>
+          <td>Pendo / qualitative feedback score (1-10)</td>
+          <td><span class="target-pill">&ge;8 / 10</span></td>
+          <td><span class="phase-pill phase-now">Ongoing</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── MILESTONES ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--milestone);">4</div>
+    <h2>Milestones / Channel Sequencing</h2>
+  </div>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Channel</th>
+          <th>Why This Order</th>
+          <th>Core Outcome</th>
+          <th>Timing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="phase-pill phase-now">Phase 1</span></td>
+          <td><strong>Email</strong></td>
+          <td>Highest usage, largest impersonation pain</td>
+          <td>Aggregated + drill-down reporting</td>
+          <td>Q2 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-now">Phase 2</span></td>
+          <td><strong>Contact Growth</strong></td>
+          <td>Strategic health &amp; audience trends</td>
+          <td>List growth &amp; engagement visibility</td>
+          <td>Q3 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-next">Phase 3</span></td>
+          <td><strong>Social</strong></td>
+          <td>Brand oversight for multi-location orgs</td>
+          <td>Centralized social reporting</td>
+          <td>Q4 2026</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-next">Phase 4</span></td>
+          <td><strong>SMS</strong></td>
+          <td>Revenue-driving channel</td>
+          <td>Extend roll-up reporting patterns</td>
+          <td>Q1 2027</td>
+        </tr>
+        <tr>
+          <td><span class="phase-pill phase-later">Phase 5+</span></td>
+          <td><strong>Revenue / Automations / Events</strong></td>
+          <td>Deepens operational value</td>
+          <td>Financial &amp; lifecycle insights</td>
+          <td>2027+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── BUSINESS IMPACT ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--impact);">5</div>
+    <h2>Business Impact Alignment</h2>
+  </div>
+  <div class="card">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon">&#128200;</div>
+        <div>
+          <div class="impact-title">Sales &amp; Enterprise Growth</div>
+          <div class="impact-desc">Stronger multi-location pitches. Teams reporting becomes a differentiator in enterprise deals, driving seat expansion and upsell.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon">&#128176;</div>
+        <div>
+          <div class="impact-title">Retention &amp; ROI</div>
+          <div class="impact-desc">Data-backed campaign insights improve performance across child accounts. Parent accounts see clear ROI, reducing churn risk.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon">&#9889;</div>
+        <div>
+          <div class="impact-title">Operational Efficiency</div>
+          <div class="impact-desc">Reduced impersonation (&ge;40%), fewer manual CSV exports, fewer support tickets. Estimated time savings: 2-4 hrs/week per parent admin.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── ANTI-GOALS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--anti);">6</div>
+    <h2>Anti-Goals (Explicit Non-Goals)</h2>
+  </div>
+  <div class="card anti-goals">
+    <ul>
+      <li>Build a full BI / analytics platform — we aggregate and surface, not replace Looker/Tableau</li>
+      <li>Real-time dashboards — near-real-time (hourly/daily refresh) is sufficient for v1</li>
+      <li>Child-account-level feature parity — parent view is strategic, not operational</li>
+      <li>Custom report builder from scratch — leverage existing Report Builder infrastructure</li>
+      <li>Cross-org benchmarking — comparing between unrelated parent accounts is out of scope</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
