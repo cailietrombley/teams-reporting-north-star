@@ -256,104 +256,77 @@
     font-weight: 700;
   }
 
-  /* ── Visual Diagram ── */
+  /* ── Visual Diagram (horizontal flow) ── */
   .diagram {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 0;
-    padding: 2rem 1rem;
+    padding: 1rem 0;
   }
 
-  .diagram-box {
-    width: 480px;
-    max-width: 100%;
-    padding: 1.25rem 1.5rem;
-    border-radius: 0.75rem;
+  .diagram-node {
+    flex: 1;
+    padding: 0.75rem 0.6rem;
     text-align: center;
     color: white;
-    position: relative;
-  }
-
-  .diagram-box h3 {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.85;
-    margin-bottom: 0.35rem;
-  }
-
-  .diagram-box p {
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  .diagram-box.ns { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-  .diagram-box.mt { background: linear-gradient(135deg, #065f46, #10b981); }
-  .diagram-box.dr { background: linear-gradient(135deg, #92400e, #f59e0b); }
-  .diagram-box.ms { background: linear-gradient(135deg, #9a3412, #f97316); }
-  .diagram-box.bi { background: linear-gradient(135deg, #5b21b6, #8b5cf6); }
-
-  .diagram-arrow {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 2rem;
+    justify-content: center;
     position: relative;
   }
 
-  .diagram-arrow::before {
-    content: "";
-    width: 2px;
-    height: 1.25rem;
-    background: #94a3b8;
+  .diagram-node:first-child { border-radius: 0.6rem 0 0 0.6rem; }
+  .diagram-node:last-child { border-radius: 0 0.6rem 0.6rem 0; }
+
+  .diagram-node h3 {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+    margin-bottom: 0.25rem;
   }
 
-  .diagram-arrow::after {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 8px solid #94a3b8;
+  .diagram-node p {
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.3;
   }
 
-  .driver-tags {
+  .diagram-node.ns { background: #2563eb; }
+  .diagram-node.mt { background: #059669; }
+  .diagram-node.dr { background: #d97706; }
+  .diagram-node.ms { background: #ea580c; }
+  .diagram-node.bi { background: #7c3aed; }
+
+  .diagram-chevron {
+    width: 0.75rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    background: var(--card-bg);
+  }
+
+  .flow-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 0.2rem;
     justify-content: center;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
   }
 
-  .driver-tag {
+  .flow-tag {
     background: rgba(255,255,255,0.25);
-    padding: 0.15rem 0.5rem;
+    padding: 0.1rem 0.35rem;
     border-radius: 1rem;
-    font-size: 0.7rem;
+    font-size: 0.55rem;
     font-weight: 600;
   }
 
-  .milestone-tags {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-
-  .milestone-tag {
-    background: rgba(255,255,255,0.2);
-    padding: 0.2rem 0.6rem;
-    border-radius: 0.35rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-
-  .milestone-tag.active {
-    background: rgba(255,255,255,0.4);
-    border-color: rgba(255,255,255,0.6);
+  .flow-tag.active {
+    background: rgba(255,255,255,0.45);
   }
 
   @media (max-width: 640px) {
@@ -382,44 +355,39 @@
     <div class="section-badge" style="background:var(--text);">&#9670;</div>
     <h2>Framework at a Glance</h2>
   </div>
-  <div class="card" style="overflow:hidden;">
+  <div class="card" style="overflow:hidden;padding:0.75rem;">
     <div class="diagram">
-      <div class="diagram-box ns">
+      <div class="diagram-node ns">
         <h3>North Star</h3>
-        <p>Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions.</p>
+        <p>Actionable cross-account insights</p>
       </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-box mt">
-        <h3>North Star Metric</h3>
-        <p>% of parent sessions leading to &ge;1 actionable insight or follow-up</p>
-        <div class="driver-tags">
-          <span class="driver-tag">Target: 60% within 6 mo</span>
+      <div class="diagram-chevron">&#9654;</div>
+      <div class="diagram-node mt">
+        <h3>Metric</h3>
+        <p>% sessions &rarr; action</p>
+        <div class="flow-tags"><span class="flow-tag">60% target</span></div>
+      </div>
+      <div class="diagram-chevron">&#9654;</div>
+      <div class="diagram-node dr">
+        <h3>Drivers</h3>
+        <p>6 KPIs</p>
+        <div class="flow-tags"><span class="flow-tag">Adoption</span><span class="flow-tag">Depth</span><span class="flow-tag">Exports</span></div>
+      </div>
+      <div class="diagram-chevron">&#9654;</div>
+      <div class="diagram-node ms">
+        <h3>Milestones</h3>
+        <div class="flow-tags">
+          <span class="flow-tag active">Email</span>
+          <span class="flow-tag active">Contacts</span>
+          <span class="flow-tag">SMS</span>
+          <span class="flow-tag">Social</span>
+          <span class="flow-tag">Auto</span>
         </div>
       </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-box dr">
-        <h3>Supporting Drivers</h3>
-        <p>Adoption &middot; Drill-down Depth &middot; Exports &middot; Impersonation &Delta; &middot; Multi-Channel Use &middot; Satisfaction</p>
-        <div class="driver-tags">
-          <span class="driver-tag">6 KPIs</span>
-          <span class="driver-tag">Each with target</span>
-        </div>
-      </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-box ms">
-        <h3>Milestones &amp; Phases</h3>
-        <div class="milestone-tags">
-          <span class="milestone-tag active">Email</span>
-          <span class="milestone-tag active">Contact Growth</span>
-          <span class="milestone-tag">SMS</span>
-          <span class="milestone-tag">Social</span>
-          <span class="milestone-tag">Automations</span>
-        </div>
-      </div>
-      <div class="diagram-arrow"></div>
-      <div class="diagram-box bi">
-        <h3>Business Impact</h3>
-        <p>Enterprise Growth &middot; Retention &amp; ROI &middot; Operational Efficiency</p>
+      <div class="diagram-chevron">&#9654;</div>
+      <div class="diagram-node bi">
+        <h3>Impact</h3>
+        <p>Gross Adds &amp; ASP Growth</p>
       </div>
     </div>
   </div>
