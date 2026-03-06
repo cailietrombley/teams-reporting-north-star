@@ -381,14 +381,154 @@
     line-height: 1.3;
   }
 
+  /* ── Sticky TOC ── */
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    margin: -2rem -2rem 2.5rem -2rem;
+    padding: 0.6rem 2rem;
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .toc a {
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .toc a:hover {
+    background: #eff6ff;
+    color: var(--north-star);
+  }
+
+  /* ── TL;DR Banner ── */
+  .tldr {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .tldr p {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .tldr-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .tldr-stat {
+    text-align: center;
+  }
+
+  .tldr-stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .tldr-stat-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Visual Timeline ── */
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 1rem 0;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 2.15rem;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #dcfce7 0%, #dcfce7 40%, #fef3c7 40%, #fef3c7 80%, #f3e8ff 80%, #f3e8ff 100%);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 0 0.25rem;
+  }
+
+  .timeline-dot {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    margin: 0.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .timeline-channel {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.5rem 0 0.2rem;
+  }
+
+  .timeline-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
   @media (max-width: 640px) {
     body { padding: 1rem; }
     .examples-grid { grid-template-columns: 1fr; }
-    .diagram-box { width: 100%; }
+    .toc { margin: -1rem -1rem 2rem -1rem; padding: 0.5rem 1rem; }
+    .tldr-stats { gap: 1rem; }
+    .ns-tree-inputs { grid-template-columns: 1fr 1fr; }
+    .timeline { flex-direction: column; align-items: stretch; }
+    .timeline::before { display: none; }
   }
 
   @media print {
     body { padding: 0; }
+    .toc { display: none; }
     .section { page-break-inside: avoid; }
   }
 </style>
@@ -396,107 +536,52 @@
 <body>
 <div class="container">
 
+<!-- ── STICKY TOC ── -->
+<nav class="toc">
+  <a href="#framework">Framework</a>
+  <a href="#problem">Problem</a>
+  <a href="#north-star">North Star</a>
+  <a href="#goals">Goals</a>
+  <a href="#milestones">Milestones</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#signals">Signals</a>
+  <a href="#impact">Impact</a>
+  <a href="#ai">AI Evolution</a>
+  <a href="#anti-goals">Anti-Goals</a>
+</nav>
+
 <header>
   <h1>Teams Reporting — North Star Framework</h1>
   <p class="subtitle">Product Strategy &amp; Measurement Framework &middot; March 2026</p>
 </header>
 
-<!-- ── 1. PROBLEM / OPPORTUNITY ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:#dc2626;">1</div>
-    <h2>Problem / Opportunity</h2>
-  </div>
-  <div class="card" style="border-left:4px solid #dc2626;">
-    <ul class="impact-list">
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128683;</div>
-        <div>
-          <div class="impact-title">No cross-account visibility</div>
-          <div class="impact-desc">Parent-level users cannot easily analyze performance across child accounts. There is no consolidated view for strategic decision-making.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128260;</div>
-        <div>
-          <div class="impact-title">Painful manual workaround</div>
-          <div class="impact-desc">Current process: impersonate child accounts, export CSVs, manually aggregate — slow, error-prone, and unscalable.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#fef2f2;">&#128200;</div>
-        <div>
-          <div class="impact-title">Blocked enterprise growth</div>
-          <div class="impact-desc">Lack of parent-level reporting reduces enterprise adoption and strategic oversight, limiting multi-location expansion.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── 2. NORTH STAR (statement + metric combined) ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:var(--north-star);">2</div>
-    <h2>North Star</h2>
-  </div>
-  <div class="card north-star-card">
-    <p class="objective"><strong>Objective:</strong> Enable parent accounts to view consolidated, actionable reporting across all child accounts for email, contact growth, SMS, social, and automations — reducing impersonation, improving executive visibility, and scaling Teams usage.</p>
-    <blockquote>"Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions."</blockquote>
-  </div>
-  <div class="card metric-card" style="margin-top:0.75rem;">
-    <p class="metric-primary">
-      % of parent account sessions that lead to &ge;1 actionable insight or follow-up action across child accounts
-    </p>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">An "actionable insight" is any session where the user performs at least one of:</p>
-    <div class="examples-grid">
-      <div class="example-item">Drill-down into a campaign or child account</div>
-      <div class="example-item">Export via CSV or Report Builder</div>
-      <div class="example-item">Identify top-performing lists or campaigns</div>
-      <div class="example-item">Resolve bounce / unsubscribe issues</div>
-      <div class="example-item">Apply a recommendation from the reporting tool</div>
-      <div class="example-item">Share or schedule a report</div>
+<!-- ── TL;DR BANNER ── -->
+<div class="tldr">
+  <p>We're building consolidated reporting for Teams parent accounts — starting with Email, expanding across 5 channels — to drive gross adds and ASP growth.</p>
+  <div class="tldr-stats">
+    <div class="tldr-stat">
+      <div class="tldr-stat-value">5</div>
+      <div class="tldr-stat-label">Channels</div>
+    </div>
+    <div class="tldr-stat">
+      <div class="tldr-stat-value">6</div>
+      <div class="tldr-stat-label">KPI Signals</div>
+    </div>
+    <div class="tldr-stat">
+      <div class="tldr-stat-value">Q1</div>
+      <div class="tldr-stat-label">Email Live</div>
+    </div>
+    <div class="tldr-stat">
+      <div class="tldr-stat-value">Q2</div>
+      <div class="tldr-stat-label">Next Channels</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ── 3. GOALS ── -->
-<section class="section">
+<!-- ── 1. FRAMEWORK TREE (moved to top as visual hook) ── -->
+<section class="section" id="framework">
   <div class="section-header">
-    <div class="section-badge" style="background:#0891b2;">3</div>
-    <h2>Goals</h2>
-  </div>
-  <div class="card" style="border-left:4px solid #0891b2;">
-    <ul class="impact-list">
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#128274;</div>
-        <div>
-          <div class="impact-title">Secure, scalable, role-aware reporting</div>
-          <div class="impact-desc">Consolidated, multi-account reporting that respects account hierarchies and user permissions.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#128269;</div>
-        <div>
-          <div class="impact-title">Roll-up + drill-down views</div>
-          <div class="impact-desc">Provide a framework that supports both portfolio-level roll-ups and campaign/team-level drill-downs.</div>
-        </div>
-      </li>
-      <li class="impact-item">
-        <div class="impact-icon" style="background:#ecfeff;">&#127942;</div>
-        <div>
-          <div class="impact-title">Executive visibility &amp; ROI</div>
-          <div class="impact-desc">Improve executive visibility, operational efficiency, and return on investment across the Teams product.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── 4. FRAMEWORK TREE ── -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-badge" style="background:var(--text);">4</div>
+    <div class="section-badge" style="background:var(--text);">1</div>
     <h2>Framework at a Glance</h2>
   </div>
   <div class="card">
@@ -559,67 +644,143 @@
   </div>
 </section>
 
-<!-- ── 5. MILESTONES ── -->
-<section class="section">
+<!-- ── 2. PROBLEM / OPPORTUNITY ── -->
+<section class="section" id="problem">
+  <div class="section-header">
+    <div class="section-badge" style="background:#dc2626;">2</div>
+    <h2>Problem / Opportunity</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #dc2626;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128683;</div>
+        <div>
+          <div class="impact-title">No cross-account visibility</div>
+          <div class="impact-desc">Parent-level users cannot easily analyze performance across child accounts. There is no consolidated view for strategic decision-making.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128260;</div>
+        <div>
+          <div class="impact-title">Painful manual workaround</div>
+          <div class="impact-desc">Current process: impersonate child accounts, export CSVs, manually aggregate — slow, error-prone, and unscalable.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#fef2f2;">&#128200;</div>
+        <div>
+          <div class="impact-title">Blocked enterprise growth</div>
+          <div class="impact-desc">Lack of parent-level reporting reduces enterprise adoption and strategic oversight, limiting multi-location expansion.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 3. NORTH STAR ── -->
+<section class="section" id="north-star">
+  <div class="section-header">
+    <div class="section-badge" style="background:var(--north-star);">3</div>
+    <h2>North Star</h2>
+  </div>
+  <div class="card north-star-card">
+    <p class="objective"><strong>Objective:</strong> Enable parent accounts to view consolidated, actionable reporting across all child accounts for email, contact growth, SMS, social, and automations — reducing impersonation, improving executive visibility, and scaling Teams usage.</p>
+    <blockquote>"Parent accounts gain actionable, cross-account insights that replace manual work and drive strategic decisions."</blockquote>
+  </div>
+  <div class="card metric-card" style="margin-top:0.75rem;">
+    <p class="metric-primary">
+      % of parent account sessions that lead to &ge;1 actionable insight or follow-up action across child accounts
+    </p>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">An "actionable insight" is any session where the user performs at least one of:</p>
+    <div class="examples-grid">
+      <div class="example-item">Drill-down into a campaign or child account</div>
+      <div class="example-item">Export via CSV or Report Builder</div>
+      <div class="example-item">Identify top-performing lists or campaigns</div>
+      <div class="example-item">Resolve bounce / unsubscribe issues</div>
+      <div class="example-item">Apply a recommendation from the reporting tool</div>
+      <div class="example-item">Share or schedule a report</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. GOALS ── -->
+<section class="section" id="goals">
+  <div class="section-header">
+    <div class="section-badge" style="background:#0891b2;">4</div>
+    <h2>Goals</h2>
+  </div>
+  <div class="card" style="border-left:4px solid #0891b2;">
+    <ul class="impact-list">
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128274;</div>
+        <div>
+          <div class="impact-title">Secure, scalable, role-aware reporting</div>
+          <div class="impact-desc">Consolidated, multi-account reporting that respects account hierarchies and user permissions.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#128269;</div>
+        <div>
+          <div class="impact-title">Roll-up + drill-down views</div>
+          <div class="impact-desc">Provide a framework that supports both portfolio-level roll-ups and campaign/team-level drill-downs.</div>
+        </div>
+      </li>
+      <li class="impact-item">
+        <div class="impact-icon" style="background:#ecfeff;">&#127942;</div>
+        <div>
+          <div class="impact-title">Executive visibility &amp; ROI</div>
+          <div class="impact-desc">Improve executive visibility, operational efficiency, and return on investment across the Teams product.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 5. MILESTONES (visual timeline) ── -->
+<section class="section" id="milestones">
   <div class="section-header">
     <div class="section-badge" style="background:var(--milestone);">5</div>
     <h2>Milestones / Channel Sequencing</h2>
   </div>
-  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Each milestone adds a channel to the parent reporting experience. The order is driven by user pain, data readiness, and business impact.</p>
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Each milestone adds a channel to the parent reporting experience. Order is driven by user pain, data readiness, and business impact.</p>
   <div class="card" style="overflow-x:auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>Phase</th>
-          <th>Channel</th>
-          <th>Why This Order</th>
-          <th>What Gets Built</th>
-          <th>Timing</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="phase-pill phase-now">Phase 1</span></td>
-          <td><strong>Email</strong></td>
-          <td>Highest usage, largest impersonation pain</td>
-          <td>Aggregated email dashboard, campaign drill-down, child-account comparison, CSV export</td>
-          <td>Q1 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-now">Phase 2</span></td>
-          <td><strong>Contact Growth</strong></td>
-          <td>Strategic health &amp; audience trends</td>
-          <td>List growth roll-ups, engagement trends, audience health scores across child accounts</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-next">Phase 3</span></td>
-          <td><strong>SMS</strong></td>
-          <td>Revenue-driving channel</td>
-          <td>SMS delivery &amp; conversion roll-ups, child-level SMS drill-down</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-next">Phase 4</span></td>
-          <td><strong>Social</strong></td>
-          <td>Brand oversight for multi-location orgs</td>
-          <td>Cross-account post performance, engagement roll-ups, social campaign comparison</td>
-          <td>Q2 2026</td>
-        </tr>
-        <tr>
-          <td><span class="phase-pill phase-later">Phase 5</span></td>
-          <td><strong>Automations</strong></td>
-          <td>Deepens operational value</td>
-          <td>Workflow performance across accounts, lifecycle stage visibility, trigger analysis</td>
-          <td>TBD</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#16a34a;">1</div>
+        <div class="timeline-channel">Email</div>
+        <div class="timeline-date">Q1 2026</div>
+        <div class="timeline-desc">Aggregated dashboards, campaign drill-down, CSV export</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#16a34a;">2</div>
+        <div class="timeline-channel">Contact Growth</div>
+        <div class="timeline-date">Q2 2026</div>
+        <div class="timeline-desc">List growth roll-ups, audience health, engagement trends</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#d97706;">3</div>
+        <div class="timeline-channel">SMS</div>
+        <div class="timeline-date">Q2 2026</div>
+        <div class="timeline-desc">Delivery &amp; conversion roll-ups, child-level drill-down</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#d97706;">4</div>
+        <div class="timeline-channel">Social</div>
+        <div class="timeline-date">Q2 2026</div>
+        <div class="timeline-desc">Cross-account post performance, engagement roll-ups</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#7c3aed;">5</div>
+        <div class="timeline-channel">Automations</div>
+        <div class="timeline-date">TBD</div>
+        <div class="timeline-desc">Workflow performance, lifecycle visibility, trigger analysis</div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ── 6. REPORTING ARCHITECTURE ── -->
-<section class="section">
+<section class="section" id="architecture">
   <div class="section-header">
     <div class="section-badge" style="background:#334155;">6</div>
     <h2>Reporting Architecture Shift</h2>
@@ -652,7 +813,7 @@
 </section>
 
 <!-- ── 7. HOW WE KNOW IT'S WORKING ── -->
-<section class="section">
+<section class="section" id="signals">
   <div class="section-header">
     <div class="section-badge" style="background:var(--driver);">7</div>
     <h2>How We Know It's Working</h2>
@@ -661,39 +822,33 @@
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;">
     <div class="card" style="border-top:3px solid #2563eb;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">Dashboard Adoption</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Are parent accounts actually using the new reporting?</div>
-      <div style="font-size:0.75rem;color:#2563eb;font-weight:600;">% of parent accounts using roll-up dashboards weekly</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Are parent accounts actually using the new reporting?</div>
     </div>
     <div class="card" style="border-top:3px solid #059669;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">Drill-Down Engagement</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Are users going deeper, or just glancing at top-level data?</div>
-      <div style="font-size:0.75rem;color:#059669;font-weight:600;">Avg # of campaign/child drill-downs per session</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Are users going deeper, or just glancing at top-level data?</div>
     </div>
     <div class="card" style="border-top:3px solid #d97706;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">Report Exports</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Are users taking action on data — sharing or analyzing offline?</div>
-      <div style="font-size:0.75rem;color:#d97706;font-weight:600;"># of CSV / Report Builder exports per week</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Are users taking action on data — sharing or analyzing offline?</div>
     </div>
     <div class="card" style="border-top:3px solid #dc2626;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">Impersonation Reduction</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Is the new reporting eliminating the biggest pain point?</div>
-      <div style="font-size:0.75rem;color:#dc2626;font-weight:600;">% reduction in impersonation events for reporting</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Is the new reporting eliminating the biggest pain point?</div>
     </div>
     <div class="card" style="border-top:3px solid #7c3aed;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">Multi-Channel Coverage</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Are users getting value beyond email — across channels?</div>
-      <div style="font-size:0.75rem;color:#7c3aed;font-weight:600;">% of parent sessions interacting with &ge;2 channels</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Are users getting value beyond email — across channels?</div>
     </div>
     <div class="card" style="border-top:3px solid #0891b2;">
       <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;">User Satisfaction</div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Does the experience feel valuable and usable?</div>
-      <div style="font-size:0.75rem;color:#0891b2;font-weight:600;">Pendo / qualitative feedback score</div>
+      <div style="font-size:0.8rem;color:var(--muted);">Does the experience feel valuable and usable?</div>
     </div>
   </div>
 </section>
 
 <!-- ── 8. BUSINESS IMPACT ── -->
-<section class="section">
+<section class="section" id="impact">
   <div class="section-header">
     <div class="section-badge" style="background:var(--impact);">8</div>
     <h2>Business Impact</h2>
@@ -723,7 +878,7 @@
 </section>
 
 <!-- ── 9. AI EVOLUTION ── -->
-<section class="section">
+<section class="section" id="ai">
   <div class="section-header">
     <div class="section-badge" style="background:linear-gradient(135deg,#0ea5e9,#8b5cf6);">9</div>
     <h2>AI Evolution — Across All Phases</h2>
@@ -760,7 +915,7 @@
 </section>
 
 <!-- ── 10. ANTI-GOALS ── -->
-<section class="section">
+<section class="section" id="anti-goals">
   <div class="section-header">
     <div class="section-badge" style="background:var(--anti);">10</div>
     <h2>Anti-Goals (Explicit Non-Goals)</h2>
