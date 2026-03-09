@@ -922,6 +922,8 @@
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1);
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(idx - 1);
   });
+
+  if (window.location.hash === '#roadmap') go(1);
 </script>
 
 </body>
