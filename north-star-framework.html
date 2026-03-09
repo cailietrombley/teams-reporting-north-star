@@ -777,25 +777,73 @@
       </div>
     </div>
 
-    <!-- Milestones -->
+    <!-- Roadmap -->
     <div style="margin-top:48px;">
-      <div style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;">Milestones</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Each phase adds channels and coverage. Order is driven by user pain, data readiness, and business impact.</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:24px;border-top:3px solid #3fb950;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#3fb950;margin-bottom:6px;">Phase 1 &mdash; Q1 2026</div>
-          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;">Email Reporting (MVP)</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.5;">Aggregated dashboards, campaign drill-down, CSV export. Also serves as the testing ground for <strong>AI Insights</strong> &mdash; validating the concept before expanding to other channels.</div>
+      <div style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;">Roadmap</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Building consolidated parent account reporting &mdash; starting with Email, expanding across all channels. Order is driven by user pain, data readiness, and business impact.</div>
+      <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:12px;">
+
+        <a href="email-reporting.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px 14px;position:relative;transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#3fb950';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='';this.style.borderColor='var(--card-border)';this.style.boxShadow=''">
+          <span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#166534;">M1</span>
+          <div style="font-size:2rem;margin-bottom:8px;">&#128231;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Email Reporting</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Aggregated dashboards, campaign drill-downs, CSV exports</div>
+          <div style="margin-top:10px;font-size:10px;font-weight:600;color:#3fb950;display:flex;align-items:center;gap:3px;">View details &#8594;</div>
+        </a>
+
+        <a href="contact-growth.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px 14px;position:relative;transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#3fb950';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='';this.style.borderColor='var(--card-border)';this.style.boxShadow=''">
+          <span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#166534;">M2</span>
+          <div style="font-size:2rem;margin-bottom:8px;">&#128200;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Contact Growth</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.4;">List growth roll-ups, audience health, engagement trends</div>
+          <div style="margin-top:10px;font-size:10px;font-weight:600;color:#3fb950;display:flex;align-items:center;gap:3px;">View details &#8594;</div>
+        </a>
+
+        <a href="sms-reporting.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px 14px;position:relative;transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#e3b341';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='';this.style.borderColor='var(--card-border)';this.style.boxShadow=''">
+          <span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e;">M3</span>
+          <div style="font-size:2rem;margin-bottom:8px;">&#128172;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">SMS Reporting</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Delivery &amp; conversion roll-ups, child-level drill-downs</div>
+          <div style="margin-top:10px;font-size:10px;font-weight:600;color:#e3b341;display:flex;align-items:center;gap:3px;">View details &#8594;</div>
+        </a>
+
+        <a href="social-reporting.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px 14px;position:relative;transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#e3b341';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='';this.style.borderColor='var(--card-border)';this.style.boxShadow=''">
+          <span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e;">M4</span>
+          <div style="font-size:2rem;margin-bottom:8px;">&#128241;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Social Reporting</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Cross-account post performance &amp; engagement analytics</div>
+          <div style="margin-top:10px;font-size:10px;font-weight:600;color:#e3b341;display:flex;align-items:center;gap:3px;">View details &#8594;</div>
+        </a>
+
+        <a href="automations-reporting.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px 14px;position:relative;transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#a78bfa';this.style.boxShadow='0 12px 28px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='';this.style.borderColor='var(--card-border)';this.style.boxShadow=''">
+          <span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;background:#f3e8ff;color:#6b21a8;">M5</span>
+          <div style="font-size:2rem;margin-bottom:8px;">&#9881;&#65039;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Automations</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Workflow performance, lifecycle visibility, trigger analysis</div>
+          <div style="margin-top:10px;font-size:10px;font-weight:600;color:#a78bfa;display:flex;align-items:center;gap:3px;">View details &#8594;</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- What's Shipping -->
+    <div style="margin-top:48px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="font-size:22px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px;">&#128640; What's Shipping</div>
+        <div style="font-size:11px;color:#484f58;">Last updated: Mar 6, 2026</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:20px;">
+          <div style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:4px 10px;border-radius:12px;background:#dcfce7;color:#166534;margin-bottom:10px;">&#10003; Completed</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.5;">User research round 2 completed with 8 parent account managers</div>
         </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:24px;border-top:3px solid #e3b341;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#e3b341;margin-bottom:6px;">Phase 2 &mdash; Q2 2026</div>
-          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;">Contacts + SMS</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.5;">List growth roll-ups, audience health, delivery &amp; conversion metrics across accounts.</div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:20px;">
+          <div style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:4px 10px;border-radius:12px;background:#dbeafe;color:#1e40af;margin-bottom:10px;">In Progress</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.5;">M2 prototype testing underway &mdash; gathering feedback on drill-down flows</div>
         </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:24px;border-top:3px solid #484f58;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:6px;">Phase 3+ &mdash; TBD</div>
-          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;">Social + Automations</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.5;">Social engagement roll-ups, workflow performance, lifecycle visibility.</div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:20px;">
+          <div style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:4px 10px;border-radius:12px;background:#fef3c7;color:#92400e;margin-bottom:10px;">Up Next</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.5;">Finalizing Email Reporting PRD and kicking off engineering sprint planning</div>
         </div>
       </div>
     </div>
