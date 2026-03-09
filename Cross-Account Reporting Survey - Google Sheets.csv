@@ -1,0 +1,100 @@
+Cross-Account Reporting Survey — Question Bank,,,,,,
+Generated: Feb 20 2026,,,,,,
+,,,,,,
+Section,Q#,Question,Type,Required,Answer Option,Option Description
+,,,,,,
+WHAT YOU DO TODAY,,,,,,
+,1,Think about the last time you needed a performance overview across all your accounts or locations. What did you actually do?,Checkbox (select all),Yes,,
+,,,,,Logged into each account one at a time to pull numbers,
+,,,,,Exported CSVs from multiple accounts then combined them in a spreadsheet,
+,,,,,Asked someone else (team member / agency / vendor) to pull and compile the data,
+,,,,,Used a dashboard or BI tool that consolidates some data automatically,
+,,,,,Gave up or skipped it because it was too time-consuming,
+,,,,,Other (please describe),[Open-ended]
+,,,,,,
+,2,In a typical month approximately how much time does your team spend assembling / formatting / reconciling reports across multiple accounts?,Radio (pick one),Yes,,
+,,,,,Less than 1 hour per month,
+,,,,,1–4 hours per month,
+,,,,,5–10 hours per month,About 1-2 hours per week
+,,,,,11–20 hours per month,About half a day per week
+,,,,,More than 20 hours per month,Essentially a part-time job
+,,,,,,
+WHERE IT BREAKS DOWN,,,,,,
+,3,Which of these problems have directly affected your work or decisions in the last 90 days?,Checkbox (select all),Yes,,
+,,,,,No single view across accounts,Had to piece together data from multiple logins or exports
+,,,,,Could not drill down from totals to details,Saw an aggregate number but couldn't identify which location or campaign drove it
+,,,,,Data was stale by the time reports were ready,Reports were outdated before you could act on them
+,,,,,Manual assembly introduced errors or inconsistencies,"Mismatched date ranges, duplicate data, or formula mistakes in combined spreadsheets"
+,,,,,Could not compare locations or teams side by side,Needed to benchmark performance but had no easy way to do it
+,,,,,Executives or stakeholders asked for data you could not quickly provide,"Scrambled to pull numbers for a meeting, review, or board request"
+,,,,,Could not share reports without manual formatting or rework,Had to reformat exports before they were presentable
+,,,,,Other (please describe),[Open-ended]
+,,,,,,
+,4,"Describe a specific moment when the lack of consolidated reporting caused you to miss something, delay a decision, or present incomplete data.",Open-ended (text box),Yes,,
+,,Prompt: Help us understand the real cost.,,,,
+,,"Example: ""We couldn't identify an underperforming location until the quarterly review because no one was looking at all 12 accounts together.""",,,
+,,"Example: ""I spent 3 hours pulling CSVs for a board meeting and still had mismatched date ranges.""",,,,
+,,,,,,
+WHAT WOULD MOVE THE NEEDLE,,,,,,
+,5,"If you had a single dashboard across all your accounts, which metrics would you check first?",Checkbox (top 3 only),Yes,,
+,,,,,Engagement rates by location or team,"Open rate, click-through rate broken down per account"
+,,,,,Deliverability and list health across all accounts,"Bounce rates, spam complaints, deliverability trends"
+,,,,,Campaign performance comparisons across locations,Same campaign across different locations — who's outperforming?
+,,,,,Revenue or ROI tied to email activity,"Attributable revenue, conversion rates, downstream impact"
+,,,,,Subscriber growth and churn by account,"Net new subscribers, unsubscribe trends, list size trajectories"
+,,,,,Team or location activity and sending volume,Who's actively sending? Who's gone quiet?
+,,,,,"Trend lines over time (week-over-week, month-over-month)","Are things getting better or worse, week-over-week and month-over-month?"
+,,,,,Other (please describe),[Open-ended]
+,,,,,,
+,6,How fresh does your cross-account data need to be for it to actually change what you do?,Radio (pick one),Yes,,
+,,,,,Real-time (within minutes),I make daily send/pause/adjust decisions based on live data
+,,,,,Same-day (refreshed every few hours),I check data daily but don't need it to the minute
+,,,,,Next-day (updated overnight),Yesterday's data is fast enough for my decisions
+,,,,,Weekly summary is fine,I review performance in weekly or biweekly cycles
+,,,,,,
+,"7","If a competing tool offered consolidated cross-account reporting today, how would that affect your decision to stay with your current platform?",Radio (pick one),Yes,,
+,,,,,Would actively evaluate switching,Cross-account reporting is important enough to change platforms for
+,,,,,"Would factor it into next renewal decision","It wouldn't trigger an immediate switch, but would weigh heavily at renewal"
+,,,,,"Nice to have, but not enough to switch","I'd appreciate it, but other factors matter more"
+,,,,,Not a factor in my platform decisions,Reporting isn't part of my tool evaluation criteria
+,,,,,,
+,8,"If we built this — a single dashboard showing all your accounts with drill-down to any location / team / campaign — what would you do with it first?",Open-ended (text box),Yes,,
+,,Prompt: Paint us a picture of the first 5 minutes.,,,,
+,,"Example: ""I'd finally be able to show our VP which 3 locations are dragging down our overall click rate.""",,,,
+,,"Example: ""I'd compare our Q1 welcome series across all 20 franchisees to find out why some convert at 2x the rate.""",,,,
+,,,,,,
+,,,,,,
+IN-CONTEXT DASHBOARD PROMPTS (embedded in reporting UI),,,,,,
+,,,,,,
+Section,Prompt #,Prompt Text,Type,Placement,Answer Option,
+Dashboard - Priority Vote,P1,You're looking at data across 8 locations. Which improvement would save you the most time?,Radio (pick one),After summary KPIs,,
+,,,,,One dashboard for all accounts,See every location's performance in a single view
+,,,,,Drill down from totals to details,"Click any metric to see which locations, campaigns, or emails drive it"
+,,,,,Faster / fresher data,Real-time or same-day reporting instead of waiting for manual pulls
+,,,,,Side-by-side location comparison,Benchmark locations against each other to find top and bottom performers
+,,,,,Automated report delivery,Scheduled reports sent to stakeholders — no manual assembly or formatting
+,,,,,Executive-ready summaries,"One-click shareable views for leadership with key takeaways, not raw data"
+,,,,,,
+Dashboard - Micro-prompt,M1,How do you currently get a view like this across all your accounts?,Quick-tap (pick one),Above locations list,,
+,,,,,Manually (CSVs / logins),,
+,,,,,Partial tool / dashboard,,
+,,,,,I can't — this is new,,
+,,,,,,
+Dashboard - Micro-prompt,M2,This data is from Feb 17. Is that fresh enough for the decisions you need to make?,Quick-tap (pick one),Above footer / timestamp,,
+,,,,,Need it faster,,
+,,,,,This is fine,,
+,,,,,,
+Floating Widget,W1,In a typical month how much time does your team spend assembling cross-account reports?,Radio (pick one),Bottom-right widget,,
+,,,,,Less than 1 hour,,
+,,,,,1–4 hours,,
+,,,,,5–10 hours (1-2 hrs/week),,
+,,,,,11–20 hours (half a day/week),,
+,,,,,20+ hours (a part-time job),,
+,,,,,,
+Floating Widget,W2,"If a competitor offered consolidated cross-account reporting today, how would that affect your platform decision?",Radio (pick one),Bottom-right widget,,
+,,,,,I'd actively evaluate switching,,
+,,,,,I'd factor it into my next renewal,,
+,,,,,"Nice to have, but not enough to switch",,
+,,,,,Wouldn't affect my decision,,
+,,,,,,
+Floating Widget,W3,"If you had a single dashboard for all accounts with drill-down, what would you do with it first?",Open-ended (text box),Bottom-right widget,,

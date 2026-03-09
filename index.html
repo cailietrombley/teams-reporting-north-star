@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams Reporting Hub</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --accent: #60a5fa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* North Star Section */
+  .north-star-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 0.3s backwards;
+  }
+
+  .north-star-question {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .north-star-metric {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  }
+
+  .north-star-metric-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .north-star-metric-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+
+  .view-framework-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .view-framework-btn:hover {
+    background: rgba(96, 165, 250, 0.2);
+    gap: 0.75rem;
+    transform: translateY(-2px);
+  }
+
+  /* What's Shipping Section */
+  .shipping-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .shipping-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .shipping-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .shipping-title h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .shipping-icon {
+    font-size: 1.5rem;
+  }
+
+  .last-updated {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .updates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .update-card {
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .update-type {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .update-win { background: #dcfce7; color: #166534; }
+  .update-progress { background: #dbeafe; color: #1e40af; }
+  .update-next { background: #fef3c7; color: #92400e; }
+
+  .update-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* Feedback Section */
+  .feedback-section {
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(167, 139, 250, 0.1));
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 0.5s backwards;
+  }
+
+  .feedback-section h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .feedback-section p {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .feedback-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .feedback-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .feedback-primary:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+  }
+
+  .feedback-secondary {
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .feedback-secondary:hover {
+    background: rgba(96, 165, 250, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Roadmap Section */
+  .roadmap-section {
+    margin-bottom: 2rem;
+  }
+
+  .roadmap-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .roadmap-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-header p {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .updates-grid {
+      grid-template-columns: 1fr;
+    }
+    .feedback-options {
+      flex-direction: column;
+    }
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    animation: fadeInUp 0.8s ease-out 0.5s backwards;
+  }
+
+  .tile {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 220px;
+  }
+
+  .tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .tile:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .tile:hover::before {
+    transform: translateX(100%);
+  }
+
+  .tile-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .tile-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .tile-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .tile-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-vision {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+  }
+
+  .badge-phase1 {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  .badge-phase2 {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .badge-future {
+    background: #f3e8ff;
+    color: #6b21a8;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+    .hero p {
+      font-size: 0.9rem;
+    }
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>Teams Reporting Hub</h1>
+    <p>Consolidated parent account reporting across all channels</p>
+  </div>
+
+  <!-- North Star -->
+  <section class="north-star-section">
+    <div class="north-star-question">What's our North Star?</div>
+
+    <div class="north-star-metric">
+      <div class="north-star-metric-value">% of parent sessions leading to ≥1 actionable insight</div>
+      <div class="north-star-metric-label">Actionable insights include: drill-downs, exports, issue resolution, sharing reports, or applying recommendations</div>
+    </div>
+
+    <a href="north-star-framework.html" class="view-framework-btn">
+      View Full Framework →
+    </a>
+  </section>
+
+  <!-- What's Shipping -->
+  <section class="shipping-section">
+    <div class="shipping-header">
+      <div class="shipping-title">
+        <div class="shipping-icon">🚀</div>
+        <h2>What's Shipping</h2>
+      </div>
+      <div class="last-updated">Last updated: Mar 6, 2026</div>
+    </div>
+
+    <div class="updates-grid">
+      <div class="update-card">
+        <div class="update-type update-win">✓ Completed</div>
+        <div class="update-content">User research round 2 completed with 8 parent account managers</div>
+      </div>
+
+      <div class="update-card">
+        <div class="update-type update-progress">In Progress</div>
+        <div class="update-content">M2 prototype testing underway — gathering feedback on drill-down flows</div>
+      </div>
+
+      <div class="update-card">
+        <div class="update-type update-next">Up Next</div>
+        <div class="update-content">Finalizing Email Reporting PRD and kicking off engineering sprint planning</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Give Feedback -->
+  <section class="feedback-section">
+    <h2>💬 Give Feedback</h2>
+    <p>Your input shapes this roadmap. Share ideas, questions, or concerns.</p>
+    <div class="feedback-options">
+      <a href="https://ctct.slack.com/archives/YOUR_CHANNEL" target="_blank" class="feedback-btn feedback-primary">
+        #teams-reporting Slack
+      </a>
+      <a href="mailto:your-email@constantcontact.com?subject=Teams Reporting Feedback" class="feedback-btn feedback-secondary">
+        📧 Email the Team
+      </a>
+      <a href="north-star-framework.html#risks" class="feedback-btn feedback-secondary">
+        📋 Review Risks & Dependencies
+      </a>
+    </div>
+  </section>
+
+  <!-- Teams Reporting Roadmap -->
+  <section class="roadmap-section">
+    <div class="roadmap-header">
+      <h2>Teams Reporting Roadmap</h2>
+      <p>Building consolidated parent account reporting — starting with Email, expanding across multiple channels</p>
+    </div>
+
+    <div class="tiles">
+    <!-- Email Reporting -->
+    <a href="email-reporting.html" class="tile">
+      <span class="tile-badge badge-phase1">Phase 1</span>
+      <div class="tile-icon">📧</div>
+      <div class="tile-title">Email Reporting</div>
+      <div class="tile-desc">Aggregated dashboards, campaign drill-downs, and CSV exports for parent accounts</div>
+    </a>
+
+    <!-- Contact Growth -->
+    <a href="contact-growth.html" class="tile">
+      <span class="tile-badge badge-phase1">Phase 2</span>
+      <div class="tile-icon">📊</div>
+      <div class="tile-title">Contact Growth</div>
+      <div class="tile-desc">List growth roll-ups, audience health tracking, and engagement trends</div>
+    </a>
+
+    <!-- SMS Reporting -->
+    <a href="sms-reporting.html" class="tile">
+      <span class="tile-badge badge-phase2">Phase 3</span>
+      <div class="tile-icon">💬</div>
+      <div class="tile-title">SMS Reporting</div>
+      <div class="tile-desc">Delivery and conversion roll-ups with child-level drill-down capabilities</div>
+    </a>
+
+    <!-- Social Reporting -->
+    <a href="social-reporting.html" class="tile">
+      <span class="tile-badge badge-phase2">Phase 4</span>
+      <div class="tile-icon">📱</div>
+      <div class="tile-title">Social Reporting</div>
+      <div class="tile-desc">Cross-account post performance and engagement analytics</div>
+    </a>
+
+    <!-- Automations -->
+    <a href="automations-reporting.html" class="tile">
+      <span class="tile-badge badge-future">Phase 5</span>
+      <div class="tile-icon">⚙️</div>
+      <div class="tile-title">Automations</div>
+      <div class="tile-desc">Workflow performance, lifecycle visibility, and trigger analysis</div>
+    </a>
+    </div>
+  </section>
+</div>
+</body>
+</html>

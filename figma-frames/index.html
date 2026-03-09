@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figma Frames — Email Performance Prototype</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 40px 20px; }
+  h1 { text-align: center; font-size: 28px; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #666; font-size: 15px; margin-bottom: 40px; }
+  .frame-grid { max-width: 1400px; margin: 0 auto; display: grid; gap: 40px; }
+  .frame-section { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+  .frame-section h2 { font-size: 18px; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+  .frame-section h2 .num { background: #2563eb; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .frame-meta { color: #888; font-size: 13px; margin-bottom: 16px; }
+  .frame-meta span { background: #f0f2f5; padding: 2px 8px; border-radius: 4px; margin-right: 6px; }
+  .frame-img { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
+  .frame-img img { width: 100%; display: block; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .trio { display: grid; grid-template-columns: 1fr 250px 1fr; gap: 32px; align-items: start; }
+  .annotations { margin-top: 16px; padding: 16px; background: #fffbeb; border-radius: 8px; border-left: 4px solid #f59e0b; }
+  .annotations h3 { font-size: 13px; text-transform: uppercase; color: #92400e; margin-bottom: 8px; letter-spacing: .5px; }
+  .annotations ul { font-size: 13px; color: #78350f; padding-left: 18px; line-height: 1.6; }
+  .color-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+  .color-swatch { width: 40px; height: 40px; border-radius: 8px; border: 1px solid #e5e7eb; position: relative; }
+  .color-swatch::after { content: attr(data-label); position: absolute; top: 44px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #666; white-space: nowrap; }
+  .spacer { height: 20px; }
+  @media (max-width: 900px) {
+    .pair, .trio { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Email Performance — Figma Reference Frames</h1>
+<p class="subtitle">6 responsive captures + design tokens &bull; Drop these PNGs into Figma as reference layers</p>
+
+<div class="frame-grid">
+
+  <!-- Frame 1 -->
+  <div class="frame-section">
+    <h2><span class="num">1</span> Desktop — Above the Fold</h2>
+    <div class="frame-meta"><span>1440 × 900</span> Default state &bull; Table view &bull; 30-day range</div>
+    <div class="frame-img"><img src="01-desktop-above-fold.png" alt="Desktop above fold"></div>
+    <div class="annotations">
+      <h3>Key Components Visible</h3>
+      <ul>
+        <li><strong>Top Nav</strong> — Breadcrumb + AI assistant button + org context</li>
+        <li><strong>Hero</strong> — Page title, location count, channel, date context</li>
+        <li><strong>Control Strip</strong> — Group By toggle, Location dropdown, Compare, Date Range tabs, Filters, Search, Reset</li>
+        <li><strong>Alert Bar</strong> — Aggregated action items with "Show only" filter</li>
+        <li><strong>KPI Summary Panel</strong> — 4 tiles with period-over-period deltas</li>
+        <li><strong>Leaderboard</strong> — Top 3 / Bottom 3 by active metric</li>
+        <li><strong>Table Header</strong> — Sortable columns, view toggle (Cards/Table)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Frame 2 -->
+  <div class="frame-section">
+    <h2><span class="num">2</span> Desktop — Full Page</h2>
+    <div class="frame-meta"><span>1440 × 3200</span> Complete scrollable page with all 8 location rows</div>
+    <div class="frame-img"><img src="02-desktop-full-page.png" alt="Desktop full page"></div>
+    <div class="annotations">
+      <h3>Additional Components (below fold)</h3>
+      <ul>
+        <li><strong>Data Table</strong> — Location, Sends, Open Rate, Click Rate, Deliverability, Bounce Rate, Status, Alerts</li>
+        <li><strong>Color-coded metrics</strong> — Green (good), default (ok), orange (warn), red (bad)</li>
+        <li><strong>Status badges</strong> — "9 items · 4 urgent", "Strong", "2 improvements"</li>
+        <li><strong>Compare checkboxes</strong> — Per-row selection</li>
+        <li><strong>Footer</strong> — Data timestamp, Refresh, Help center, Keyboard shortcuts</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Responsive Trio -->
+  <div class="frame-section">
+    <h2><span class="num">3–5</span> Responsive Breakpoints</h2>
+    <div class="frame-meta">Mobile (393px) &bull; Tablet (810px) &bull; Wide Desktop (1920px)</div>
+    <div class="trio">
+      <div>
+        <div class="frame-img"><img src="03-mobile-portrait.png" alt="Mobile portrait"></div>
+        <p style="text-align:center; margin-top:8px; font-size:12px; color:#888;">Mobile — 393 × 852</p>
+      </div>
+      <div>
+        <div class="frame-img"><img src="04-mobile-full-page.png" alt="Mobile full page"></div>
+        <p style="text-align:center; margin-top:8px; font-size:12px; color:#888;">Mobile Full — 393 × 3600</p>
+      </div>
+      <div>
+        <div class="frame-img"><img src="05-tablet.png" alt="Tablet"></div>
+        <p style="text-align:center; margin-top:8px; font-size:12px; color:#888;">Tablet — 810 × 1080</p>
+      </div>
+    </div>
+    <div class="annotations">
+      <h3>Mobile-Specific Adaptations</h3>
+      <ul>
+        <li><strong>Stacked controls</strong> — Group By, Date Range, and Filters stack vertically</li>
+        <li><strong>KPI strip</strong> — Horizontal scroll, 2 tiles visible at a time</li>
+        <li><strong>Leaderboard</strong> — Full-width stacked columns</li>
+        <li><strong>Table</strong> — Horizontal scroll with sticky first column (Location)</li>
+        <li><strong>Bottom-sheet filter drawer</strong> — Full-screen overlay on tap</li>
+        <li><strong>Touch targets</strong> — Minimum 44px tap areas</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Frame 6 -->
+  <div class="frame-section">
+    <h2><span class="num">6</span> Wide Desktop</h2>
+    <div class="frame-meta"><span>1920 × 1080</span> Large monitor / presentation view</div>
+    <div class="frame-img"><img src="06-wide-desktop.png" alt="Wide desktop"></div>
+    <div class="annotations">
+      <h3>Wide Viewport Notes</h3>
+      <ul>
+        <li>Max-width container keeps content readable (~1280px)</li>
+        <li>Control strip fits in single row at this width</li>
+        <li>All table columns visible without horizontal scroll</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Design Tokens -->
+  <div class="frame-section">
+    <h2><span class="num">✦</span> Design Tokens & Color Palette</h2>
+    <div class="frame-meta">Reference for rebuilding in Figma</div>
+
+    <h3 style="font-size:14px; margin: 16px 0 8px;">Threshold Colors</h3>
+    <div class="color-row">
+      <div class="color-swatch" style="background:#15803d" data-label="Good"></div>
+      <div class="color-swatch" style="background:#166534" data-label="Good bg"></div>
+      <div class="color-swatch" style="background:#ca8a04" data-label="OK"></div>
+      <div class="color-swatch" style="background:#ea580c" data-label="Warn"></div>
+      <div class="color-swatch" style="background:#dc2626" data-label="Bad"></div>
+    </div>
+
+    <h3 style="font-size:14px; margin: 24px 0 8px;">Brand Colors</h3>
+    <div class="color-row">
+      <div class="color-swatch" style="background:#2563eb" data-label="Primary"></div>
+      <div class="color-swatch" style="background:#1e40af" data-label="Primary dark"></div>
+      <div class="color-swatch" style="background:#eff6ff" data-label="Primary bg"></div>
+      <div class="color-swatch" style="background:#1a1a2e" data-label="Text"></div>
+      <div class="color-swatch" style="background:#64748b" data-label="Text muted"></div>
+      <div class="color-swatch" style="background:#f8fafc" data-label="Page bg"></div>
+      <div class="color-swatch" style="background:#ffffff; border-color:#ddd" data-label="Card bg"></div>
+    </div>
+
+    <h3 style="font-size:14px; margin: 24px 0 8px;">Status Badge Colors</h3>
+    <div class="color-row">
+      <div class="color-swatch" style="background:#dc2626" data-label="Urgent"></div>
+      <div class="color-swatch" style="background:#f97316" data-label="Warning"></div>
+      <div class="color-swatch" style="background:#22c55e" data-label="Strong"></div>
+      <div class="color-swatch" style="background:#3b82f6" data-label="Info"></div>
+    </div>
+
+    <div class="annotations" style="margin-top: 24px;">
+      <h3>Typography & Spacing</h3>
+      <ul>
+        <li><strong>Font:</strong> -apple-system / SF Pro / Segoe UI / Roboto</li>
+        <li><strong>Page title:</strong> 28px bold → 22px on mobile</li>
+        <li><strong>Section headers:</strong> 14px uppercase, letter-spacing 1.5px</li>
+        <li><strong>KPI values:</strong> 32px bold → 24px on mobile</li>
+        <li><strong>Body text:</strong> 14px / line-height 1.5</li>
+        <li><strong>Table cells:</strong> 13px</li>
+        <li><strong>Card border-radius:</strong> 14px (desktop), 10px (mobile)</li>
+        <li><strong>Button border-radius:</strong> 8px</li>
+        <li><strong>Container max-width:</strong> 1280px centered</li>
+        <li><strong>Card gap:</strong> 16px</li>
+        <li><strong>Section padding:</strong> 28px desktop / 16px mobile</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="spacer"></div>
+<p style="text-align:center; color:#999; font-size:12px; margin-top:40px;">
+  Generated Feb 19, 2026 &bull; Drop PNGs into Figma → right-click → "Set as Fill" on frames
+</p>
+
+</body>
+</html>
