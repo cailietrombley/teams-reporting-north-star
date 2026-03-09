@@ -1,39 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💬 SMS Reporting — Teams Reporting Hub</title>
-<style>
-  :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f1f5f9; --muted: #94a3b8; --border: #334155; --accent: #60a5fa; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
-  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: all 0.2s; }
-  .back-link:hover { gap: 0.75rem; }
-  .container { max-width: 1000px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
-  .phase-badge { display: inline-block; background: #f3e8ff; color: #6b21a8; font-size: 0.75rem; padding: 0.35rem 0.85rem; border-radius: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-  header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-  header .subtitle { font-size: 1.1rem; color: var(--muted); }
-  .coming-soon { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 3rem 2rem; text-align: center; }
-  .coming-soon-icon { font-size: 4rem; margin-bottom: 1.5rem; }
-  .coming-soon h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-  .coming-soon p { color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="./" />
+  <title>SMS Reporting — CTCT for Teams</title>
+  <meta name="version" content="MVP-1.0" />
+  <meta name="release" content="North Star Reporting – Phase 3 (SMS)" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="components/left-nav.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            main: { 50: '#f6fcff', 100: '#e6f8ff', 200: '#d6eafe', 300: '#a6d3fd', 400: '#65abff', 500: '#468af1', 600: '#186ded', 700: '#085fe2', 800: '#1357be', 900: '#0046ae', 950: '#0b3c85' },
+            neutral: { 50: '#fcfcfd', 100: '#f7f9fd', 200: '#f0f4fa', 300: '#dce2ec', 400: '#c9d0de', 500: '#8d9bb6', 600: '#6b7492', 700: '#63708a', 800: '#5d687e', 900: '#3f4b63', 950: '#313b4d' },
+            success: { 50: '#f6fef9', 100: '#ecfdf3', 200: '#dbfae6', 300: '#a9efc5', 400: '#75e0a7', 500: '#47cd89', 600: '#17b26a', 700: '#079455', 800: '#067647', 900: '#085d3a', 950: '#074d31' },
+            danger: { 50: '#fffafa', 100: '#fef3f2', 200: '#fee4e2', 300: '#fecdca', 400: '#fda29b', 500: '#fe5a58', 600: '#f04438', 700: '#d92d20', 800: '#b42318', 900: '#912018', 950: '#7a271a' },
+            warning: { 50: '#fffcf5', 100: '#fff8eb', 200: '#fff2de', 300: '#ffdaaf', 400: '#ffca8d', 500: '#ffb26b', 600: '#f79009', 700: '#e97420', 800: '#d55b03', 900: '#93370d', 950: '#792e0d' },
+            accent: { 50: '#fbfaff', 100: '#f5f3ff', 200: '#ece9fe', 300: '#ddd6fe', 400: '#c3b5fd', 500: '#a48afb', 600: '#875bf7', 700: '#7839ee', 800: '#6927da', 900: '#5720b7', 950: '#401687' },
+            ctct: { blue: '#468af1', 'blue-light': '#e6f8ff', orange: '#f79009' }
+          },
+          fontFamily: { sans: ['CTSans', 'system-ui', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <style>
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    body { line-height: 1.5; background: #f7f9fd; }
+    .kpi-card { background: #fff; border: 1px solid #dce2ec; border-radius: 12px; padding: 20px 24px; }
+    .kpi-label { font-size: 13px; font-weight: 500; color: #6b7492; margin-bottom: 4px; }
+    .kpi-value { font-size: 28px; font-weight: 700; color: #111827; line-height: 1.2; }
+    .kpi-sub { font-size: 12px; color: #6b7492; margin-top: 2px; }
+    .kpi-footer { font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+    .kpi-footer.positive { color: #059669; }
+    .kpi-footer.negative { color: #dc2626; }
+    .chart-card { background: #fff; border: 1px solid #dce2ec; border-radius: 12px; padding: 24px; }
+    .chart-title { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .chart-subtitle { font-size: 12px; color: #6b7492; margin-bottom: 16px; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 700; color: #6b7492; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #dce2ec; background: #f7f9fd; }
+    .data-table td { padding: 12px 16px; font-size: 13px; color: #3f4b63; border-bottom: 1px solid #f0f4fa; }
+    .data-table tr:hover td { background: #f7f9fd; }
+    .data-table .acct-name { font-weight: 600; color: #111827; }
+    .trend-up { color: #059669; }
+    .trend-down { color: #dc2626; }
+    .trend-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 2px; }
+    .trend-badge.up { background: #ecfdf3; color: #059669; }
+    .trend-badge.down { background: #fef2f2; color: #dc2626; }
+    .growth-bar-track { flex: 1; height: 8px; background: #f0f4fa; border-radius: 4px; overflow: hidden; }
+    .growth-bar-fill { height: 100%; border-radius: 4px; }
+    .filter-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid #dce2ec; border-radius: 8px; background: #fff; font-size: 13px; color: #3f4b63; cursor: pointer; font-family: inherit; transition: border-color 0.15s, background 0.15s; }
+    .filter-btn:hover { border-color: #8d9bb6; background: #f7f9fd; }
+    .export-btn { background: #186ded; color: #fff; border: none; }
+    .export-btn:hover { background: #085fe2; }
+    .segment-pill { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; border: 1px solid #dce2ec; background: #fff; color: #5d687e; cursor: pointer; transition: all 0.15s; }
+    .segment-pill.active { background: #186ded; color: #fff; border-color: #186ded; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+    .status-dot.delivered { background: #17b26a; }
+    .status-dot.failed { background: #f04438; }
+    .status-dot.pending { background: #f79009; }
+    .conv-card { background: #f7f9fd; border: 1px solid #f0f4fa; border-radius: 10px; padding: 16px; text-align: center; }
+    .conv-value { font-size: 24px; font-weight: 700; color: #111827; }
+    .conv-label { font-size: 12px; color: #6b7492; margin-top: 4px; }
+    .export-toast { position: fixed; top: 1.5rem; right: 1.5rem; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; background: #dcfce7; border: 1px solid #22c55e; border-radius: 9999px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 9999; font-size: 14px; font-weight: 600; color: #111827; transition: opacity 0.25s, transform 0.25s; }
+    .export-toast.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    .msg-preview { background: #e6f8ff; border-radius: 12px 12px 12px 4px; padding: 10px 14px; font-size: 13px; color: #1357be; max-width: 280px; line-height: 1.5; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <a href="north-star-framework.html#roadmap" class="back-link">← Back to Hub</a>
-  <header>
-    <div class="phase-badge">Phase 3</div>
-    <h1>💬 SMS Reporting</h1>
-    <p class="subtitle">Delivery and conversion analytics</p>
-  </header>
-  <div class="coming-soon">
-    <div class="coming-soon-icon">🚧</div>
-    <h2>Page Under Construction</h2>
-    <p>Detailed requirements and implementation plans coming soon.</p>
+  <div class="flex min-h-0 pb-6">
+    <div id="sidebar-backdrop" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onclick="toggleSidebar()"></div>
+    <aside id="sidebar" class="group fixed lg:sticky inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 transition-all duration-300 ease-in-out z-[60] w-64 bg-white border-r border-neutral-200 flex flex-col sidenav-expanded lg:top-0 lg:h-screen lg:flex-shrink-0 overflow-visible">
+      <div id="sidebar-content" class="relative h-full overflow-visible"></div>
+    </aside>
+
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 bg-neutral-100 min-w-0">
+      <div style="padding: 0 2rem;">
+
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-2">
+          <div>
+            <div class="flex items-baseline gap-3 flex-wrap">
+              <h1 class="text-2xl font-semibold text-neutral-900 mb-0">SMS reporting</h1>
+              <span id="last-refreshed" class="text-sm text-neutral-600">Last refreshed: March 9 • 12:00 PM ET</span>
+            </div>
+            <p class="text-sm text-neutral-600 mt-1">Monitor SMS campaign delivery, click-through rates, and conversions across all accounts.</p>
+          </div>
+          <button type="button" class="filter-btn export-btn" onclick="exportSMS()">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Export report</span>
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap items-center gap-3 mb-6 mt-4">
+          <button class="filter-btn" id="date-filter">
+            <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="date-label" data-value="30">Last 30 days</span>
+            <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <button class="filter-btn" id="account-filter">
+            <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span id="account-label">All accounts</span>
+            <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div id="kpi-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+          <div class="kpi-card">
+            <div class="kpi-label">Messages sent</div>
+            <div class="kpi-value" id="kpi-sent">146K</div>
+            <div class="kpi-footer positive"><span>▲</span> +12.4% vs last period</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Delivered</div>
+            <div class="kpi-value" id="kpi-delivered">142K</div>
+            <div class="kpi-sub">97.3% delivery rate</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Click rate</div>
+            <div class="kpi-value" id="kpi-ctr">18.7%</div>
+            <div class="kpi-footer positive"><span>▲</span> +2.1% vs last period</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Conversions</div>
+            <div class="kpi-value" id="kpi-conv">4,820</div>
+            <div class="kpi-footer positive"><span>▲</span> +8.5% vs last period</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Opt-outs</div>
+            <div class="kpi-value" id="kpi-optout">1.2K</div>
+            <div class="kpi-footer negative"><span>▼</span> +0.3% vs last period</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Revenue attributed</div>
+            <div class="kpi-value" id="kpi-revenue">$84.2K</div>
+            <div class="kpi-footer positive"><span>▲</span> +15.6% vs last period</div>
+          </div>
+        </div>
+
+        <!-- Delivery Funnel + Conversion -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+          <!-- Delivery Funnel -->
+          <div class="chart-card">
+            <div class="chart-title">SMS delivery funnel</div>
+            <div class="chart-subtitle">Message flow from send to conversion</div>
+            <div class="space-y-3 mt-4">
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span class="font-medium text-neutral-900">Sent</span><span class="font-semibold">146,200</span></div>
+                <div class="growth-bar-track"><div class="growth-bar-fill" style="width:100%;background:#186ded;"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span class="font-medium text-neutral-900">Delivered</span><span class="font-semibold">142,253 <span class="text-xs text-neutral-500">(97.3%)</span></span></div>
+                <div class="growth-bar-track"><div class="growth-bar-fill" style="width:97.3%;background:#468af1;"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span class="font-medium text-neutral-900">Clicked</span><span class="font-semibold">26,601 <span class="text-xs text-neutral-500">(18.7%)</span></span></div>
+                <div class="growth-bar-track"><div class="growth-bar-fill" style="width:18.7%;background:#17b26a;"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span class="font-medium text-neutral-900">Converted</span><span class="font-semibold">4,820 <span class="text-xs text-neutral-500">(3.3%)</span></span></div>
+                <div class="growth-bar-track"><div class="growth-bar-fill" style="width:3.3%;background:#7839ee;"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span class="font-medium text-neutral-900">Opted out</span><span class="font-semibold trend-down">1,205 <span class="text-xs">(0.8%)</span></span></div>
+                <div class="growth-bar-track"><div class="growth-bar-fill" style="width:0.8%;background:#f04438;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversion by Type -->
+          <div class="chart-card">
+            <div class="chart-title">Conversions by campaign type</div>
+            <div class="chart-subtitle">SMS campaign performance breakdown</div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+              <div class="conv-card">
+                <div class="conv-value">2,140</div>
+                <div class="conv-label">Promotional</div>
+                <div class="text-xs text-success-600 mt-1">44.4% of total</div>
+              </div>
+              <div class="conv-card">
+                <div class="conv-value">1,280</div>
+                <div class="conv-label">Transactional</div>
+                <div class="text-xs text-success-600 mt-1">26.6% of total</div>
+              </div>
+              <div class="conv-card">
+                <div class="conv-value">890</div>
+                <div class="conv-label">Automated</div>
+                <div class="text-xs text-success-600 mt-1">18.5% of total</div>
+              </div>
+              <div class="conv-card">
+                <div class="conv-value">510</div>
+                <div class="conv-label">Re-engagement</div>
+                <div class="text-xs text-success-600 mt-1">10.6% of total</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top SMS Campaigns Table -->
+        <div class="chart-card mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="chart-title">SMS campaign performance</div>
+              <div class="chart-subtitle">All campaigns across accounts — Last 30 days</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="relative">
+                <svg class="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="sms-search" placeholder="Search campaigns or accounts..." class="rounded-lg border border-neutral-200 bg-white pl-9 pr-3 py-2 text-sm text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-main-500 focus:border-transparent" style="width:260px">
+              </div>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table" id="sms-table">
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>Account</th>
+                  <th>Sent</th>
+                  <th>Delivered</th>
+                  <th>Click rate</th>
+                  <th>Conversions</th>
+                  <th>Revenue</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="acct-name">Flash Sale — 40% Off Today</td>
+                  <td>Greenway Market</td>
+                  <td>24,500</td>
+                  <td><span class="status-dot delivered"></span>23,814</td>
+                  <td><span class="trend-badge up">24.3%</span></td>
+                  <td>1,240</td>
+                  <td>$22,800</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Weekend BOGO — Fresh Picks</td>
+                  <td>PureField Produce</td>
+                  <td>22,100</td>
+                  <td><span class="status-dot delivered"></span>21,537</td>
+                  <td><span class="trend-badge up">21.8%</span></td>
+                  <td>980</td>
+                  <td>$18,400</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">New Menu Alert — Spring 2026</td>
+                  <td>Living Root Kitchen</td>
+                  <td>18,600</td>
+                  <td><span class="status-dot delivered"></span>18,042</td>
+                  <td><span class="trend-badge up">19.5%</span></td>
+                  <td>720</td>
+                  <td>$14,100</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Order Confirmation</td>
+                  <td>Greenway Market</td>
+                  <td>16,800</td>
+                  <td><span class="status-dot delivered"></span>16,632</td>
+                  <td>8.2%</td>
+                  <td>340</td>
+                  <td>$6,200</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Loyalty Points Reminder</td>
+                  <td>SunCoast Organics</td>
+                  <td>15,200</td>
+                  <td><span class="status-dot delivered"></span>14,744</td>
+                  <td><span class="trend-badge up">17.1%</span></td>
+                  <td>540</td>
+                  <td>$9,800</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Delivery Update — En Route</td>
+                  <td>PureField Produce</td>
+                  <td>14,400</td>
+                  <td><span class="status-dot delivered"></span>14,112</td>
+                  <td>6.4%</td>
+                  <td>185</td>
+                  <td>$3,100</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Re-engagement — Come Back!</td>
+                  <td>Living Root Kitchen</td>
+                  <td>12,800</td>
+                  <td><span class="status-dot delivered"></span>12,288</td>
+                  <td><span class="trend-badge down">9.2%</span></td>
+                  <td>215</td>
+                  <td>$4,200</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Appointment Reminder</td>
+                  <td>SunCoast Organics</td>
+                  <td>11,400</td>
+                  <td><span class="status-dot delivered"></span>11,172</td>
+                  <td>5.8%</td>
+                  <td>130</td>
+                  <td>$2,400</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">VIP Early Access — Spring</td>
+                  <td>Greenway Market</td>
+                  <td>10,400</td>
+                  <td><span class="status-dot delivered"></span>10,088</td>
+                  <td><span class="trend-badge up">22.6%</span></td>
+                  <td>470</td>
+                  <td>$3,200</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SMS by Account -->
+        <div class="chart-card mb-6">
+          <div class="chart-title">SMS performance by account</div>
+          <div class="chart-subtitle">Aggregate metrics per account — Last 30 days</div>
+          <div class="overflow-x-auto mt-4">
+            <table class="data-table" id="sms-accounts-table">
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Campaigns</th>
+                  <th>Messages sent</th>
+                  <th>Delivery rate</th>
+                  <th>Click rate</th>
+                  <th>Conversions</th>
+                  <th>Revenue</th>
+                  <th>Opt-out rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="acct-name">Greenway Market</td>
+                  <td>5</td>
+                  <td>51,700</td>
+                  <td>97.0%</td>
+                  <td><span class="trend-badge up">20.4%</span></td>
+                  <td>2,050</td>
+                  <td>$32,200</td>
+                  <td>0.7%</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">Living Root Kitchen</td>
+                  <td>3</td>
+                  <td>31,400</td>
+                  <td>96.8%</td>
+                  <td>15.2%</td>
+                  <td>935</td>
+                  <td>$18,300</td>
+                  <td>0.9%</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">PureField Produce</td>
+                  <td>3</td>
+                  <td>36,500</td>
+                  <td>97.6%</td>
+                  <td><span class="trend-badge up">18.9%</span></td>
+                  <td>1,165</td>
+                  <td>$21,500</td>
+                  <td>0.6%</td>
+                </tr>
+                <tr>
+                  <td class="acct-name">SunCoast Organics</td>
+                  <td>3</td>
+                  <td>26,600</td>
+                  <td>97.4%</td>
+                  <td>14.8%</td>
+                  <td>670</td>
+                  <td>$12,200</td>
+                  <td>1.1%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Messages Preview -->
+        <div class="chart-card mb-6">
+          <div class="chart-title">Top performing messages</div>
+          <div class="chart-subtitle">Highest click-rate SMS messages this period</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div class="p-4 rounded-lg bg-neutral-50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold text-success-700 bg-success-100 px-2 py-0.5 rounded-full">24.3% CTR</span>
+                <span class="text-xs text-neutral-500">Greenway Market</span>
+              </div>
+              <div class="msg-preview">🔥 FLASH SALE! 40% off everything today only. Shop now before it's gone → https://grwy.co/sale</div>
+              <div class="text-xs text-neutral-500 mt-2">Sent Mar 2 • 24,500 recipients</div>
+            </div>
+            <div class="p-4 rounded-lg bg-neutral-50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold text-success-700 bg-success-100 px-2 py-0.5 rounded-full">22.6% CTR</span>
+                <span class="text-xs text-neutral-500">Greenway Market</span>
+              </div>
+              <div class="msg-preview">🌟 VIP Early Access! Spring collection is LIVE for you. Browse first → https://grwy.co/spring</div>
+              <div class="text-xs text-neutral-500 mt-2">Sent Mar 7 • 10,400 recipients</div>
+            </div>
+            <div class="p-4 rounded-lg bg-neutral-50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold text-success-700 bg-success-100 px-2 py-0.5 rounded-full">21.8% CTR</span>
+                <span class="text-xs text-neutral-500">PureField Produce</span>
+              </div>
+              <div class="msg-preview">🥬 Weekend BOGO on all fresh picks! Buy 1 get 1 free — this Sat & Sun only → https://pf.co/bogo</div>
+              <div class="text-xs text-neutral-500 mt-2">Sent Mar 1 • 22,100 recipients</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
   </div>
-</div>
+
+  <!-- Export Toast -->
+  <div id="export-toast" class="export-toast hidden">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+    <span id="export-toast-msg">Export successful</span>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      var sidebar = document.getElementById('sidebar');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if (sidebar) sidebar.classList.toggle('-translate-x-full');
+      if (backdrop) backdrop.classList.toggle('hidden');
+    }
+
+    (function () {
+      if (document.getElementById('sidebar-content')) {
+        try { renderLeftNav('sidebar-content', { activeId: 'reporting-sms' }); } catch (e) {}
+      }
+    })();
+
+    /* Date filter */
+    var DATE_MULT = { '7': 0.25, '30': 1, '90': 2.8, '365': 10 };
+    var BASE = { sent: 146200, delivered: 142253, ctr: 18.7, conv: 4820, optout: 1205, revenue: 84200 };
+    document.getElementById('date-filter').addEventListener('click', function () {
+      var vals = ['7','30','90','365'];
+      var labels = ['Last 7 days','Last 30 days','Last 90 days','Last 12 months'];
+      var el = document.getElementById('date-label');
+      var cur = vals.indexOf(el.getAttribute('data-value'));
+      var next = (cur + 1) % vals.length;
+      el.setAttribute('data-value', vals[next]);
+      el.textContent = labels[next];
+      var m = DATE_MULT[vals[next]];
+      document.getElementById('kpi-sent').textContent = fmtK(BASE.sent * m);
+      document.getElementById('kpi-delivered').textContent = fmtK(BASE.delivered * m);
+      document.getElementById('kpi-ctr').textContent = (BASE.ctr + (Math.random() * 3 - 1.5)).toFixed(1) + '%';
+      document.getElementById('kpi-conv').textContent = fmtN(Math.round(BASE.conv * m));
+      document.getElementById('kpi-optout').textContent = fmtK(BASE.optout * m);
+      document.getElementById('kpi-revenue').textContent = '$' + fmtK(BASE.revenue * m);
+    });
+
+    function fmtK(n) {
+      if (n >= 1000000) return (n / 1000000).toFixed(n >= 10000000 ? 1 : 2).replace(/\.?0+$/, '') + 'M';
+      if (n >= 1000) return (n / 1000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, '') + 'K';
+      return Math.round(n).toLocaleString();
+    }
+    function fmtN(n) { return n.toLocaleString(); }
+
+    /* Account filter */
+    var ACCOUNTS = ['All accounts','Greenway Market','Living Root Kitchen','PureField Produce','SunCoast Organics'];
+    var acctIdx = 0;
+    document.getElementById('account-filter').addEventListener('click', function () {
+      acctIdx = (acctIdx + 1) % ACCOUNTS.length;
+      document.getElementById('account-label').textContent = ACCOUNTS[acctIdx];
+      var acct = ACCOUNTS[acctIdx];
+      document.querySelectorAll('#sms-table tbody tr').forEach(function (r) {
+        if (acct === 'All accounts') { r.style.display = ''; return; }
+        var cell = r.querySelectorAll('td')[1];
+        r.style.display = cell && cell.textContent.trim() === acct ? '' : 'none';
+      });
+      document.querySelectorAll('#sms-accounts-table tbody tr').forEach(function (r) {
+        if (acct === 'All accounts') { r.style.display = ''; return; }
+        r.style.display = r.querySelector('td').textContent.trim() === acct ? '' : 'none';
+      });
+    });
+
+    /* Search */
+    document.getElementById('sms-search').addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      document.querySelectorAll('#sms-table tbody tr').forEach(function (r) {
+        r.style.display = !q || r.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+
+    /* Export */
+    function exportSMS() {
+      var rows = [['Campaign','Account','Sent','Delivered','Click Rate','Conversions','Revenue']];
+      document.querySelectorAll('#sms-table tbody tr').forEach(function (tr) {
+        if (tr.style.display === 'none') return;
+        var cells = tr.querySelectorAll('td');
+        var row = [];
+        cells.forEach(function (c) { row.push(c.textContent.replace(/\s+/g,' ').trim()); });
+        rows.push(row);
+      });
+      var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\r\n');
+      var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'sms-report-' + new Date().toISOString().split('T')[0] + '.csv';
+      a.click(); URL.revokeObjectURL(url);
+      var toast = document.getElementById('export-toast');
+      toast.classList.remove('hidden');
+      setTimeout(function () { toast.classList.add('hidden'); }, 3000);
+    }
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  </script>
 </body>
 </html>

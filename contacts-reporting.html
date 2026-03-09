@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="./" />
+  <title>Contacts Reporting — CTCT for Teams</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="components/left-nav.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            main: { 50: '#f6fcff', 100: '#e6f8ff', 200: '#d6eafe', 300: '#a6d3fd', 400: '#65abff', 500: '#468af1', 600: '#186ded', 700: '#085fe2', 800: '#1357be', 900: '#0046ae', 950: '#0b3c85' },
+            neutral: { 50: '#fcfcfd', 100: '#f7f9fd', 200: '#f0f4fa', 300: '#dce2ec', 400: '#c9d0de', 500: '#8d9bb6', 600: '#6b7492', 700: '#63708a', 800: '#5d687e', 900: '#3f4b63', 950: '#313b4d' },
+            success: { 50: '#f6fef9', 100: '#ecfdf3', 200: '#dbfae6', 300: '#a9efc5', 400: '#75e0a7', 500: '#47cd89', 600: '#17b26a', 700: '#079455', 800: '#067647', 900: '#085d3a', 950: '#074d31' },
+            danger: { 50: '#fffafa', 100: '#fef3f2', 200: '#fee4e2', 300: '#fecdca', 400: '#fda29b', 500: '#fe5a58', 600: '#f04438', 700: '#d92d20', 800: '#b42318', 900: '#912018', 950: '#7a271a' }
+          },
+          fontFamily: { sans: ['CTSans', 'system-ui', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <style>
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Semibold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'CTSans'; src: url('fonts/CTSans-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+    body { line-height: 1.5; background: #f7f9fd; }
+    .channel-tab { padding: 10px 16px; font-size: 14px; font-weight: 500; color: #5d687e; text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .channel-tab:hover { color: #111827; }
+    .channel-tab.active { color: #186ded; border-bottom-color: #186ded; font-weight: 600; }
+    .filter-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid #dce2ec; border-radius: 8px; background: #fff; font-size: 13px; color: #3f4b63; cursor: pointer; font-family: inherit; transition: border-color 0.15s, background 0.15s; }
+    .filter-btn:hover { border-color: #8d9bb6; background: #f7f9fd; }
+    .export-btn { background: #186ded; color: #fff; border: none; }
+    .export-btn:hover { background: #085fe2; }
+    .date-opt { display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 16px; font-size: 13px; color: #3f4b63; border: none; background: none; cursor: pointer; font-family: inherit; text-align: left; }
+    .date-opt:hover { background: #f0f4fa; }
+    .date-opt.selected { color: #186ded; font-weight: 600; }
+    .date-opt.selected::before { content: '✓'; font-size: 12px; }
+    .kpi-card { background: #fff; border: 1px solid #dce2ec; border-radius: 12px; padding: 20px 24px; }
+    .kpi-label { font-size: 13px; font-weight: 500; color: #6b7492; margin-bottom: 4px; }
+    .kpi-value { font-size: 28px; font-weight: 700; color: #111827; line-height: 1.2; }
+    .kpi-footer { font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+    .kpi-footer.positive { color: #059669; }
+    .kpi-footer.negative { color: #dc2626; }
+    .chart-card { background: #fff; border: 1px solid #dce2ec; border-radius: 12px; padding: 24px; }
+    .chart-title { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .chart-subtitle { font-size: 12px; color: #6b7492; margin-bottom: 16px; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 700; color: #6b7492; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #dce2ec; background: #f7f9fd; }
+    .data-table td { padding: 12px 16px; font-size: 13px; color: #3f4b63; border-bottom: 1px solid #f0f4fa; }
+    .data-table tr:hover td { background: #f7f9fd; }
+    .data-table .acct-name { font-weight: 600; color: #111827; }
+    .trend-up { color: #059669; }
+    .trend-down { color: #dc2626; }
+    .trend-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 2px; }
+    .trend-badge.up { background: #ecfdf3; color: #059669; }
+    .trend-badge.down { background: #fef2f2; color: #dc2626; }
+    .health-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+    .health-dot.healthy { background: #17b26a; }
+    .health-dot.warning { background: #f79009; }
+    .health-dot.at-risk { background: #f04438; }
+    .ga-table { width: 100%; border-collapse: collapse; }
+    .ga-table th { text-align: left; padding: 8px 0; font-size: 12px; font-weight: 600; color: #6b7492; border-bottom: 1px solid #f0f4fa; }
+    .ga-table td { padding: 10px 0; font-size: 13px; color: #3f4b63; border-bottom: 1px solid #f0f4fa; vertical-align: middle; }
+    .ga-table tr:last-child td { border-bottom: none; }
+    .ga-table .ga-source { font-weight: 500; color: #111827; }
+    .ga-table .ga-amount { font-weight: 600; color: #111827; text-align: center; min-width: 50px; }
+    .ga-table th.ga-amount { text-align: center; }
+    .ga-dist-cell { display: flex; align-items: center; gap: 8px; }
+    .ga-dist-bar { width: 100px; height: 8px; background: #f0f4fa; border-radius: 4px; overflow: hidden; }
+    .ga-dist-fill { height: 100%; border-radius: 4px; background: #186ded; }
+    .ga-dist-pct { font-size: 12px; color: #6b7492; min-width: 32px; text-align: right; }
+    .ga-add-link { font-size: 12px; font-weight: 500; color: #186ded; cursor: pointer; text-decoration: none; }
+    .ga-add-link:hover { text-decoration: underline; }
+    .ga-cta { background: #e6f8ff; border-radius: 10px; padding: 16px 20px; margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .ga-cta-text { font-size: 13px; font-weight: 600; color: #186ded; }
+    .ga-cta a { font-size: 12px; color: #186ded; text-decoration: none; font-weight: 500; }
+    .ga-cta a:hover { text-decoration: underline; }
+    .view-report-link { font-size: 13px; font-weight: 600; color: #186ded; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+    .view-report-link:hover { text-decoration: underline; }
+    .overview-metric { background: #fff; border: 1px solid #dce2ec; border-radius: 12px; padding: 20px 24px; cursor: pointer; transition: all 0.15s; border-left: 3px solid transparent; }
+    .overview-metric:hover { background: #f7f9fd; }
+    .overview-metric.active { border-left-color: #186ded !important; background: #f6fcff; }
+    .overview-metric .ov-label { font-size: 13px; font-weight: 500; color: #6b7492; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .overview-metric .ov-value { font-size: 28px; font-weight: 700; color: #111827; line-height: 1.2; }
+    .overview-metric.active .ov-value { color: #186ded; }
+    .chart-legend { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7492; margin-bottom: 8px; }
+    .chart-legend-line { width: 20px; height: 2px; border-radius: 1px; }
+    .export-toast { position: fixed; top: 1.5rem; right: 1.5rem; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; background: #dcfce7; border: 1px solid #22c55e; border-radius: 9999px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 9999; font-size: 14px; font-weight: 600; color: #111827; transition: opacity 0.25s, transform 0.25s; }
+    .export-toast.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+  </style>
+</head>
+<body>
+  <div class="flex min-h-0 pb-6">
+    <div id="sidebar-backdrop" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onclick="toggleSidebar()"></div>
+    <aside id="sidebar" class="group fixed lg:sticky inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 transition-all duration-300 ease-in-out z-[60] w-64 bg-white border-r border-neutral-200 flex flex-col sidenav-expanded lg:top-0 lg:h-screen lg:flex-shrink-0 overflow-visible">
+      <div id="sidebar-content" class="relative h-full overflow-visible"></div>
+    </aside>
+
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 bg-neutral-100 min-w-0">
+      <div style="padding: 0 2rem;">
+
+        <!-- Page Title -->
+        <h1 class="text-2xl font-bold text-neutral-950 mb-0">Reporting</h1>
+
+        <!-- Channel Tabs -->
+        <div class="flex gap-0 mt-3 mb-5 border-b border-neutral-200">
+          <a href="email-engagement-report.html" class="channel-tab">Emails</a>
+          <a href="contacts-reporting.html" class="channel-tab active">Contacts</a>
+          <a href="#" class="channel-tab">Revenue</a>
+          <a href="reports.html" class="channel-tab">Reports</a>
+        </div>
+
+        <!-- Filter & Actions Bar -->
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <span class="text-sm text-neutral-500">Showing data for:</span>
+          <div class="relative">
+            <button class="filter-btn" id="date-filter" onclick="toggleDateDropdown()">
+              <span id="date-label" data-value="30">Past 30 Days</span>
+              <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div id="date-dropdown" class="hidden absolute left-0 top-full mt-1 z-50 bg-white border border-neutral-200 rounded-lg shadow-xl py-1 min-w-[200px]">
+              <button class="date-opt" data-value="7" onclick="selectDateRange(this)">Past 7 Days</button>
+              <button class="date-opt selected" data-value="30" onclick="selectDateRange(this)">Past 30 Days</button>
+              <button class="date-opt" data-value="60" onclick="selectDateRange(this)">Past 60 Days</button>
+              <button class="date-opt" data-value="90" onclick="selectDateRange(this)">Past 90 Days</button>
+              <button class="date-opt" data-value="365" onclick="selectDateRange(this)">Past 12 Months</button>
+              <div class="border-t border-neutral-100 my-1"></div>
+              <button class="date-opt" data-value="this-month" onclick="selectDateRange(this)">This Month</button>
+              <button class="date-opt" data-value="this-quarter" onclick="selectDateRange(this)">This Quarter</button>
+              <button class="date-opt" data-value="this-year" onclick="selectDateRange(this)">This Year</button>
+              <div class="border-t border-neutral-100 my-1"></div>
+              <button class="date-opt" data-value="last-month" onclick="selectDateRange(this)">Last Month</button>
+              <button class="date-opt" data-value="last-quarter" onclick="selectDateRange(this)">Last Quarter</button>
+              <button class="date-opt" data-value="last-year" onclick="selectDateRange(this)">Last Year</button>
+            </div>
+          </div>
+          <span class="text-sm text-neutral-600" id="date-range-display">February 8, 2026 – March 9, 2026</span>
+          <div class="relative" id="account-wrap">
+            <button class="filter-btn" id="account-filter" onclick="toggleAccountDropdown()">
+              <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>
+              <span id="account-label">All accounts</span>
+              <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div id="account-dropdown" class="hidden absolute left-0 top-full mt-1 z-50 bg-white border border-neutral-200 rounded-lg shadow-xl flex flex-col" style="width:17rem;max-height:20rem;">
+              <div class="px-3 py-1.5 border-b border-neutral-100 flex items-center justify-between">
+                <span class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Accounts</span>
+                <button type="button" class="text-xs font-medium text-main-600 hover:underline" onclick="resetAccounts()">Reset</button>
+              </div>
+              <div class="px-2 py-2 border-b border-neutral-100">
+                <input type="text" id="acct-search" class="w-full px-3 py-2 text-sm border border-neutral-200 rounded-md placeholder:text-neutral-400 focus:ring-2 focus:ring-main-500 focus:border-main-500 outline-none" placeholder="Search accounts..." autocomplete="off" oninput="filterAccountList()">
+              </div>
+              <div class="overflow-y-auto flex-1 min-h-0" id="acct-list">
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="all" checked onchange="onAcctAllChange(this)">
+                  <span class="text-sm text-neutral-800">All accounts</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Greenway Market" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-800">Greenway Market</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Living Root Kitchen" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-800">Living Root Kitchen</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="PureField Produce" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-800">PureField Produce</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="SunCoast Organics" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-800">SunCoast Organics</span>
+                </label>
+              </div>
+              <div class="px-3 py-2 border-t border-neutral-100 flex justify-end gap-2">
+                <button type="button" class="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50" onclick="toggleAccountDropdown()">Cancel</button>
+                <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-main-600 hover:bg-main-700 rounded-lg" onclick="applyAccountFilter()">Apply</button>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 ml-auto">
+            <button class="filter-btn" style="gap:4px">
+              <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Get notifications
+            </button>
+            <div class="relative">
+              <button class="filter-btn export-btn" id="download-trigger" onclick="toggleDownloadDropdown()">
+                Download as
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div id="download-dropdown" class="hidden absolute right-0 top-full mt-1 z-50 bg-white border border-neutral-200 rounded-lg shadow-xl py-1 min-w-[120px]">
+                <button class="date-opt" onclick="exportContacts('pdf')">.pdf</button>
+                <button class="date-opt" onclick="exportContacts('csv')">.csv</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="chart-card mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="chart-title" style="margin-bottom:0">Overview</span>
+              <svg class="w-4 h-4 text-neutral-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="overview-metric active" data-tab="total" onclick="switchChart(this)">
+              <div class="ov-label">Total subscribers <span class="text-neutral-400" id="ov-total-date">(03/09/2026)</span></div>
+              <div class="ov-value" id="ov-total">294</div>
+            </div>
+            <div class="overview-metric" data-tab="gained" onclick="switchChart(this)">
+              <div class="ov-label">Subscribers gained <svg class="w-3.5 h-3.5 text-neutral-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+              <div class="ov-value" id="ov-gained">12,435</div>
+            </div>
+            <div class="overview-metric" data-tab="unsub" onclick="switchChart(this)">
+              <div class="ov-label">Unsubscribed <svg class="w-3.5 h-3.5 text-neutral-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+              <div class="ov-value" id="ov-unsub">12,235</div>
+            </div>
+          </div>
+          <div class="chart-legend" id="chart-legend">
+            <span class="chart-legend-line" style="background:#186ded"></span>
+            <span id="legend-label">Total subscribers</span>
+          </div>
+          <div style="position:relative;height:260px;padding-left:44px;">
+            <div style="position:absolute;left:0;top:0;bottom:24px;width:40px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;" id="y-axis"></div>
+            <div style="height:236px;border-left:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;position:relative;">
+              <svg width="100%" height="100%" id="trend-svg" viewBox="0 0 700 236" preserveAspectRatio="none"></svg>
+            </div>
+          </div>
+          <div class="flex justify-between text-xs text-neutral-400 mt-1" style="padding-left:44px;" id="x-axis"></div>
+        </div>
+
+        <!-- Contacts by Account Table -->
+        <div class="chart-card mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="chart-title">Contacts by account</div>
+              <div class="chart-subtitle" id="table-subtitle">Growth and engagement metrics — Past 30 Days</div>
+            </div>
+            <div class="relative">
+              <svg class="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="contacts-search" placeholder="Search accounts..." class="rounded-lg border border-neutral-200 bg-white pl-9 pr-3 py-2 text-sm text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-main-500 focus:border-transparent" style="width:220px">
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table" id="contacts-table">
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Total contacts</th>
+                  <th id="col-new">New subscribers (30d)</th>
+                  <th>Unsubscribed</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Growth Analysis + Unsubscribe Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="chart-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="chart-title" style="margin-bottom:0">Growth analysis</span>
+                <svg class="w-3.5 h-3.5 text-neutral-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </div>
+              <a href="#" class="view-report-link">View the full report &rarr;</a>
+            </div>
+            <table class="ga-table" id="growth-table">
+              <thead><tr><th>Contact source</th><th class="ga-amount">Amount</th><th>Distribution</th></tr></thead>
+              <tbody id="growth-tbody"></tbody>
+            </table>
+            <div class="ga-cta">
+              <div>
+                <div class="ga-cta-text">Boost your contact growth!</div>
+                <a href="#">Create a sign up form &rarr;</a>
+              </div>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M8 40L40 8" stroke="#186ded" stroke-width="3" stroke-linecap="round"/><path d="M20 8h20v20" stroke="#186ded" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 36l8-8" stroke="#a6d3fd" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="chart-title" style="margin-bottom:0">Unsubscribe analysis</span>
+                <svg class="w-3.5 h-3.5 text-neutral-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </div>
+              <a href="#" class="view-report-link">View the full report &rarr;</a>
+            </div>
+            <table class="ga-table" id="unsub-table">
+              <thead><tr><th>Unsubscribe reason</th><th class="ga-amount">Amount</th><th>Distribution</th></tr></thead>
+              <tbody id="unsub-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="export-toast" class="export-toast hidden">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+    <span id="export-toast-msg">Export successful</span>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      var s = document.getElementById('sidebar'), b = document.getElementById('sidebar-backdrop');
+      if (s) s.classList.toggle('-translate-x-full');
+      if (b) b.classList.toggle('hidden');
+    }
+    (function(){ try { renderLeftNav('sidebar-content', { activeId: 'reporting-contacts' }); } catch(e){} })();
+
+    /* ── Data by account (realistic for a small org ~294 total contacts) ── */
+    var ACCT_BASE = {
+      'Greenway Market':     { total: 112 },
+      'Living Root Kitchen': { total: 86 },
+      'PureField Produce':   { total: 58 },
+      'SunCoast Organics':   { total: 38 }
+    };
+
+    var GROWTH_SOURCES_30 = [
+      { source: 'Blackbaud', amount: 4 },
+      { source: 'Manual upload', amount: 2 },
+      { source: 'Landing page', amount: 1 },
+      { source: 'Social: Facebook', amount: 0 },
+      { source: 'SMS', amount: 0 }
+    ];
+
+    var UNSUB_REASONS_30 = [
+      { reason: 'No reason', amount: 12222 },
+      { reason: 'Never signed up for your emails', amount: 0 },
+      { reason: 'Too many emails from you', amount: 0 },
+      { reason: 'The content is no longer relevant', amount: 0 },
+      { reason: 'The content is not what I expected', amount: 0 },
+      { reason: 'Other reason', amount: 0 },
+      { reason: 'Unsubscribed by you', amount: 0 }
+    ];
+
+    /* Date range multipliers for scaling data realistically */
+    var RANGE_CONFIG = {
+      '7':   { label:'Past 7 Days',   mult: 0.23, gained: 2,   unsub: 2840,  days: 7 },
+      '30':  { label:'Past 30 Days',  mult: 1,    gained: 7,   unsub: 12222, days: 30 },
+      '60':  { label:'Past 60 Days',  mult: 2,    gained: 15,  unsub: 24100, days: 60 },
+      '90':  { label:'Past 90 Days',  mult: 3,    gained: 24,  unsub: 35800, days: 90 },
+      '365': { label:'Past 12 Months',mult: 12,   gained: 102, unsub: 148200,days: 365 },
+      'this-month':   { label:'This Month',    mult: 0.3,  gained: 2,  unsub: 3100,  days: 9 },
+      'this-quarter': { label:'This Quarter',  mult: 3,    gained: 22, unsub: 34500, days: 68 },
+      'this-year':    { label:'This Year',     mult: 3,    gained: 22, unsub: 34500, days: 68 },
+      'last-month':   { label:'Last Month',    mult: 1.1,  gained: 8,  unsub: 13400, days: 28 },
+      'last-quarter': { label:'Last Quarter',  mult: 3,    gained: 26, unsub: 38200, days: 92 },
+      'last-year':    { label:'Last Year',     mult: 12,   gained: 98, unsub: 142800,days: 365 }
+    };
+
+    var currentRange = '30';
+
+    function fmt(n) {
+      if (n >= 1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+      if (n >= 10000) return (n/1000).toFixed(1).replace(/\.0$/,'') + 'K';
+      return n.toLocaleString();
+    }
+
+    function getDateRangeLabel(val) {
+      var cfg = RANGE_CONFIG[val];
+      if (!cfg) return '';
+      var end = new Date(2026, 2, 9);
+      var start = new Date(end);
+      start.setDate(start.getDate() - cfg.days);
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + ' – ' + months[end.getMonth()] + ' ' + end.getDate() + ', ' + end.getFullYear();
+    }
+
+    function updateAll() {
+      var cfg = RANGE_CONFIG[currentRange] || RANGE_CONFIG['30'];
+      var gained = cfg.gained;
+      var unsub = cfg.unsub;
+      var total = 294;
+
+      document.getElementById('ov-total').textContent = fmt(total);
+      document.getElementById('ov-gained').textContent = fmt(gained).toLocaleString();
+      document.getElementById('ov-unsub').textContent = fmt(unsub).toLocaleString();
+
+      document.getElementById('date-range-display').textContent = getDateRangeLabel(currentRange);
+      document.getElementById('table-subtitle').textContent = 'Growth and engagement metrics — ' + cfg.label;
+      document.getElementById('col-new').textContent = 'New subscribers (' + cfg.days + 'd)';
+
+      renderTable(cfg);
+      renderGrowthSources(cfg);
+      renderUnsubReasons(cfg);
+      renderChart();
+    }
+
+    function renderTable(cfg) {
+      var tbody = document.getElementById('contacts-tbody');
+      var html = '';
+      var m = cfg.mult;
+      Object.keys(ACCT_BASE).forEach(function(name) {
+        var a = ACCT_BASE[name];
+        var newC = Math.round((a.total * 0.025) * m);
+        var unsC = Math.round((a.total * 0.95) * m);
+        html += '<tr>';
+        html += '<td class="acct-name">' + name + '</td>';
+        html += '<td>' + a.total.toLocaleString() + '</td>';
+        html += '<td><span class="trend-badge up">+' + newC + '</span></td>';
+        html += '<td>' + unsC.toLocaleString() + '</td>';
+        html += '</tr>';
+      });
+      tbody.innerHTML = html;
+    }
+
+    function gaRow(label, amount, total, addLink) {
+      var pct = total > 0 ? Math.round(amount / total * 100) : 0;
+      var distHtml = '<div class="ga-dist-cell"><div class="ga-dist-bar"><div class="ga-dist-fill" style="width:' + pct + '%"></div></div>';
+      if (addLink && amount === 0) distHtml += '<a href="#" class="ga-add-link">Add &rarr;</a>';
+      else distHtml += '<span class="ga-dist-pct">' + pct + '%</span>';
+      distHtml += '</div>';
+      return '<tr><td class="ga-source">' + label + '</td><td class="ga-amount">' + amount.toLocaleString() + '</td><td>' + distHtml + '</td></tr>';
+    }
+
+    function renderGrowthSources(cfg) {
+      var m = cfg.mult;
+      var total = 0;
+      var scaled = GROWTH_SOURCES_30.map(function(s) {
+        var a = Math.round(s.amount * m);
+        total += a;
+        return { source: s.source, amount: a };
+      });
+      var html = '';
+      scaled.forEach(function(s) { html += gaRow(s.source, s.amount, total, true); });
+      document.getElementById('growth-tbody').innerHTML = html;
+    }
+
+    function renderUnsubReasons(cfg) {
+      var m = cfg.mult;
+      var total = 0;
+      var scaled = UNSUB_REASONS_30.map(function(s) {
+        var a = Math.round(s.amount * m);
+        total += a;
+        return { reason: s.reason, amount: a };
+      });
+      var html = '';
+      scaled.forEach(function(s) { html += gaRow(s.reason, s.amount, total, false); });
+      document.getElementById('unsub-tbody').innerHTML = html;
+    }
+
+    /* ── Chart ── */
+    var activeChart = 'total';
+    var chartLabels = { total: 'Total subscribers', gained: 'Subscribers gained', unsub: 'Unsubscribed' };
+    var chartColors = { total: '#186ded', gained: '#17b26a', unsub: '#f04438' };
+    function switchChart(el) {
+      document.querySelectorAll('.overview-metric').forEach(function(m) { m.classList.remove('active'); });
+      el.classList.add('active');
+      activeChart = el.getAttribute('data-tab');
+      document.getElementById('legend-label').textContent = chartLabels[activeChart];
+      document.querySelector('.chart-legend-line').style.background = chartColors[activeChart];
+      renderChart();
+    }
+
+    function renderChart() {
+      var cfg = RANGE_CONFIG[currentRange] || RANGE_CONFIG['30'];
+      var pts = Math.min(cfg.days, 30);
+      var colors = { total: '#186ded', gained: '#17b26a', unsub: '#f04438' };
+      var color = colors[activeChart] || '#186ded';
+
+      var values = [];
+      for (var i = 0; i < pts; i++) {
+        if (activeChart === 'total') values.push(290 + Math.round(Math.random() * 8 - 4));
+        else if (activeChart === 'gained') values.push(Math.max(0, Math.round(cfg.gained / pts + (Math.random() * 2 - 1))));
+        else values.push(Math.round(cfg.unsub / pts + (Math.random() * cfg.unsub * 0.1 / pts)));
+      }
+
+      var maxV = Math.max.apply(null, values) * 1.15;
+      var minV = Math.min(0, Math.min.apply(null, values));
+      var range = maxV - minV || 1;
+
+      var yAxis = document.getElementById('y-axis');
+      var steps = 5;
+      var yHtml = '';
+      for (var s = 0; s <= steps; s++) {
+        var v = maxV - (s / steps) * range;
+        yHtml += '<span class="text-xs text-neutral-400" style="text-align:right;display:block">' + fmt(Math.round(v)) + '</span>';
+      }
+      yAxis.innerHTML = yHtml;
+
+      var pathD = '';
+      var circles = '';
+      var w = 700, h = 236;
+      values.forEach(function(v, idx) {
+        var x = pts > 1 ? Math.round(idx / (pts - 1) * w) : w / 2;
+        var y = Math.round(h - ((v - minV) / range) * (h - 10) - 5);
+        pathD += (idx === 0 ? 'M' : ' L') + x + ',' + y;
+        circles += '<circle cx="' + x + '" cy="' + y + '" r="3.5" fill="#fff" stroke="' + color + '" stroke-width="2"/>';
+      });
+      circles = circles.replace(/stroke-width="2"\/>$/, 'fill="' + color + '" stroke-width="0"/>');
+
+      var gridLines = '';
+      for (var g = 0; g <= steps; g++) {
+        var gy = Math.round(g / steps * h);
+        gridLines += '<line x1="0" y1="' + gy + '" x2="' + w + '" y2="' + gy + '" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>';
+      }
+
+      document.getElementById('trend-svg').innerHTML = gridLines +
+        '<path d="' + pathD + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6,4"/>' +
+        circles;
+
+      var end = new Date(2026, 2, 9);
+      var xHtml = '';
+      var labelCount = Math.min(pts, 10);
+      for (var li = 0; li < labelCount; li++) {
+        var dayOffset = Math.round(li / (labelCount - 1) * (cfg.days - 1));
+        var d = new Date(end);
+        d.setDate(d.getDate() - (cfg.days - 1 - dayOffset));
+        var mm = String(d.getMonth()+1).padStart(2,'0');
+        var dd = String(d.getDate()).padStart(2,'0');
+        xHtml += '<span>' + mm + '/' + dd + '/' + d.getFullYear() + '</span>';
+      }
+      document.getElementById('x-axis').innerHTML = xHtml;
+    }
+
+    /* ── Dropdowns ── */
+    function toggleDateDropdown() {
+      document.getElementById('date-dropdown').classList.toggle('hidden');
+      document.getElementById('download-dropdown').classList.add('hidden');
+      document.getElementById('account-dropdown').classList.add('hidden');
+    }
+    function toggleDownloadDropdown() {
+      document.getElementById('download-dropdown').classList.toggle('hidden');
+      document.getElementById('date-dropdown').classList.add('hidden');
+      document.getElementById('account-dropdown').classList.add('hidden');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#date-filter') && !e.target.closest('#date-dropdown')) document.getElementById('date-dropdown').classList.add('hidden');
+      if (!e.target.closest('#download-trigger') && !e.target.closest('#download-dropdown')) document.getElementById('download-dropdown').classList.add('hidden');
+    });
+
+    function selectDateRange(btn) {
+      document.querySelectorAll('.date-opt[data-value]').forEach(function(o){ o.classList.remove('selected'); });
+      btn.classList.add('selected');
+      currentRange = btn.getAttribute('data-value');
+      var cfg = RANGE_CONFIG[currentRange];
+      document.getElementById('date-label').textContent = cfg ? cfg.label : btn.textContent.trim();
+      document.getElementById('date-label').setAttribute('data-value', currentRange);
+      document.getElementById('date-dropdown').classList.add('hidden');
+      updateAll();
+    }
+
+    /* ── Account filter dropdown ── */
+    function toggleAccountDropdown() {
+      var dd = document.getElementById('account-dropdown');
+      dd.classList.toggle('hidden');
+      document.getElementById('date-dropdown').classList.add('hidden');
+      document.getElementById('download-dropdown').classList.add('hidden');
+    }
+
+    function filterAccountList() {
+      var q = document.getElementById('acct-search').value.toLowerCase();
+      document.querySelectorAll('#acct-list .acct-row').forEach(function(row) {
+        var text = row.textContent.toLowerCase();
+        row.style.display = !q || text.indexOf(q) !== -1 ? '' : 'none';
+      });
+    }
+
+    function onAcctAllChange(el) {
+      if (el.checked) {
+        document.querySelectorAll('.acct-check:not([data-account="all"])').forEach(function(c) { c.checked = false; });
+      }
+    }
+
+    function onAcctChange() {
+      var allBox = document.querySelector('.acct-check[data-account="all"]');
+      var anyChecked = document.querySelectorAll('.acct-check:not([data-account="all"]):checked').length > 0;
+      if (anyChecked) allBox.checked = false;
+      else allBox.checked = true;
+    }
+
+    function resetAccounts() {
+      document.querySelectorAll('.acct-check').forEach(function(c) { c.checked = c.getAttribute('data-account') === 'all'; });
+    }
+
+    function applyAccountFilter() {
+      var allBox = document.querySelector('.acct-check[data-account="all"]');
+      var selected = [];
+      if (allBox.checked) {
+        selected = ['all'];
+      } else {
+        document.querySelectorAll('.acct-check:not([data-account="all"]):checked').forEach(function(c) {
+          selected.push(c.getAttribute('data-account'));
+        });
+      }
+      if (selected.length === 0) { selected = ['all']; allBox.checked = true; }
+
+      var label = document.getElementById('account-label');
+      if (selected[0] === 'all') {
+        label.textContent = 'All accounts';
+      } else if (selected.length === 1) {
+        label.textContent = selected[0];
+      } else {
+        label.textContent = selected.length + ' selected';
+      }
+
+      document.querySelectorAll('#contacts-table tbody tr').forEach(function(r) {
+        if (selected[0] === 'all') { r.style.display = ''; return; }
+        var cellText = r.querySelector('td').textContent.trim();
+        r.style.display = selected.indexOf(cellText) !== -1 ? '' : 'none';
+      });
+
+      document.getElementById('account-dropdown').classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#account-wrap')) document.getElementById('account-dropdown').classList.add('hidden');
+    });
+
+    /* ── Search ── */
+    document.getElementById('contacts-search').addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      document.querySelectorAll('#contacts-table tbody tr').forEach(function(r) {
+        r.style.display = !q || r.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+
+    /* ── Export ── */
+    function exportContacts(format) {
+      if (format === 'pdf' && typeof html2pdf !== 'undefined') {
+        html2pdf().set({ margin: 0.5, filename: 'contacts-report-' + new Date().toISOString().split('T')[0] + '.pdf', image: { type:'jpeg', quality:0.98 }, html2canvas: { scale:2 }, jsPDF: { unit:'in', format:'letter', orientation:'portrait' } }).from(document.querySelector('main')).save();
+      } else {
+        var rows = [['Account','Total','New Subscribers','Unsubscribed']];
+        document.querySelectorAll('#contacts-table tbody tr').forEach(function(tr) {
+          if (tr.style.display === 'none') return;
+          var row = []; tr.querySelectorAll('td').forEach(function(c) { row.push(c.textContent.replace(/\s+/g,' ').trim()); });
+          rows.push(row);
+        });
+        var csv = '\uFEFF' + rows.map(function(r){ return r.join(','); }).join('\r\n');
+        var blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob); a.download = 'contacts-report-' + new Date().toISOString().split('T')[0] + '.csv';
+        a.click();
+      }
+      showToast('Export complete');
+      document.getElementById('download-dropdown').classList.add('hidden');
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('export-toast');
+      document.getElementById('export-toast-msg').textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(function(){ t.classList.add('hidden'); }, 3000);
+    }
+
+    /* ── Init ── */
+    updateAll();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  </script>
+</body>
+</html>
