@@ -634,43 +634,59 @@
     <p>A fully integrated <strong>Teams Reporting hub</strong> that gives multi-account customers a single destination to view, compare, and act on performance data across <strong>all channels</strong> (Email, SMS, Social), <strong>all accounts</strong>, with drill-down, trend analysis, and AI-powered insights &mdash; eliminating impersonation entirely.</p>
   </div>
 
-  <!-- North Star Metric + Inputs -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;">
-    <div style="background:linear-gradient(135deg,#1e3a5f,#0f172a);border:1px solid #1e40af;border-radius:12px;padding:28px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#60a5fa;margin-bottom:8px;">&#11088; North Star Metric</div>
-      <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:12px;">% of parent sessions leading to &ge;1 actionable insight</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.5;">Actionable insights include: drill-downs, exports, issue resolution, sharing reports, or applying recommendations</div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(96,165,250,0.2);font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px;">
-        <span style="color:#60a5fa;">&#9679;</span> Productivity Game &mdash; how efficiently can parent users get reporting done?
+  <!-- North Star Metric -->
+  <div style="background:linear-gradient(135deg,#1e3a5f,#0f172a);border:1px solid #1e40af;border-radius:14px;padding:32px;margin-bottom:16px;text-align:center;position:relative;">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#60a5fa;margin-bottom:10px;">&#11088; North Star Metric</div>
+    <div style="font-size:22px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:10px;">% of parent sessions leading to &ge;1 actionable insight</div>
+    <div style="font-size:12px;color:#94a3b8;line-height:1.5;">drill-downs &middot; exports &middot; issue resolution &middot; sharing reports &middot; applying recommendations</div>
+    <div style="position:absolute;bottom:12px;right:20px;font-size:10px;color:#475569;display:flex;align-items:center;gap:5px;">
+      <span style="color:#60a5fa;">&#9679;</span> Productivity Game
+    </div>
+  </div>
+
+  <!-- Connector -->
+  <div style="text-align:center;margin-bottom:16px;color:#334155;font-size:18px;line-height:1;">&#9660;</div>
+
+  <!-- Input Cards -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:28px;">
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #2563eb;">
+      <div style="font-size:24px;margin-bottom:8px;">&#128200;</div>
+      <div style="font-size:12px;font-weight:700;color:#2563eb;margin-bottom:2px;">Adoption</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;">Breadth of usage</div>
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Dashboard usage by parent accounts</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Reporting feature activation</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Multi-channel coverage</div>
       </div>
     </div>
-    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:28px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#e3b341;margin-bottom:16px;">Inputs that drive the metric</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Adoption</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Roll-up dashboard usage by parent accounts</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Onboarding &amp; activation of reporting features</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Multi-channel coverage (Email, SMS, Social)</div>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Engagement</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Campaign &amp; child-account drill-downs</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Report Builder &amp; CSV exports</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Contact growth &amp; list health analysis</div>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Efficiency</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Impersonation reduction for reporting</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Sunset "My Reports" legacy system</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Fewer reporting-related support tickets</div>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Satisfaction</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Pendo &amp; qualitative feedback scores</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">Simple, non-complex experience</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.4;">AI insights &amp; conversational reporting</div>
-        </div>
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #059669;">
+      <div style="font-size:24px;margin-bottom:8px;">&#128269;</div>
+      <div style="font-size:12px;font-weight:700;color:#059669;margin-bottom:2px;">Engagement</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;">Depth of exploration</div>
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Campaign &amp; account drill-downs</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Report Builder &amp; CSV exports</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">List health analysis</div>
+      </div>
+    </div>
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #dc2626;">
+      <div style="font-size:24px;margin-bottom:8px;">&#9889;</div>
+      <div style="font-size:12px;font-weight:700;color:#dc2626;margin-bottom:2px;">Efficiency</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;">Operational improvement</div>
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Impersonation reduction</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Sunset "My Reports"</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Fewer support tickets</div>
+      </div>
+    </div>
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #7c3aed;">
+      <div style="font-size:24px;margin-bottom:8px;">&#128578;</div>
+      <div style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:2px;">Satisfaction</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;">Perceived value</div>
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Pendo &amp; feedback scores</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">Simple, non-complex UX</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;">AI insights value</div>
       </div>
     </div>
   </div>
@@ -767,58 +783,6 @@
             <li style="font-size:12px;color:var(--muted);line-height:1.5;">&#8594; <strong>Higher contract values:</strong> Portfolio-level ROI justifies premium pricing.</li>
             <li style="font-size:12px;color:var(--muted);line-height:1.5;">&#8594; <strong>Multi-channel packaging:</strong> SMS, Social, Automations give sales ammunition.</li>
           </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- North Star Metric + Input Tree -->
-    <div style="margin-top:48px;">
-      <div style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;">North Star Metric &amp; Inputs</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">How inputs ladder up to the metric and connect to our product work.</div>
-
-      <!-- Metric -->
-      <div style="background:linear-gradient(135deg,#1e3a5f,#0f172a);border:1px solid #1e40af;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#60a5fa;margin-bottom:6px;">North Star Metric</div>
-        <div style="font-size:17px;font-weight:700;color:var(--text);">% of parent sessions leading to &ge;1 actionable insight</div>
-      </div>
-
-      <!-- Input cards -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #2563eb;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#2563eb;margin-bottom:10px;">Adoption</div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Breadth of usage</div>
-          <div style="display:grid;gap:6px;">
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Roll-up dashboard usage by parent accounts</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Onboarding &amp; activation of reporting features</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Multi-channel coverage (Email, SMS, Social)</div>
-          </div>
-        </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #059669;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#059669;margin-bottom:10px;">Engagement</div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Depth of exploration</div>
-          <div style="display:grid;gap:6px;">
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Campaign &amp; child-account drill-downs</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Report Builder &amp; CSV exports</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Contact growth &amp; list health analysis</div>
-          </div>
-        </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #dc2626;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#dc2626;margin-bottom:10px;">Efficiency</div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Operational improvement</div>
-          <div style="display:grid;gap:6px;">
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Impersonation reduction for reporting</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Sunset "My Reports" legacy system</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Fewer reporting-related support tickets</div>
-          </div>
-        </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;border-top:3px solid #7c3aed;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#7c3aed;margin-bottom:10px;">Satisfaction</div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Perceived value</div>
-          <div style="display:grid;gap:6px;">
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Pendo &amp; qualitative feedback scores</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">Simple, non-complex experience</div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.4;">AI insights &amp; conversational reporting</div>
-          </div>
         </div>
       </div>
     </div>
