@@ -161,7 +161,15 @@
                 </label>
                 <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
                   <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Greenway Market" onchange="onAcctChange()">
-                  <span class="text-sm text-neutral-800">Greenway Market</span>
+                  <span class="text-sm font-medium text-neutral-800">Greenway Market</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer" style="padding-left:2.25rem">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Greenway Market — Boston" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-600">Boston</span>
+                </label>
+                <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer" style="padding-left:2.25rem">
+                  <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Greenway Market — New York" onchange="onAcctChange()">
+                  <span class="text-sm text-neutral-600">New York</span>
                 </label>
                 <label class="acct-row flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer">
                   <input type="checkbox" class="acct-check rounded border-neutral-300" data-account="Living Root Kitchen" onchange="onAcctChange()">
@@ -312,7 +320,7 @@
 
     /* ── Data by account (realistic for a small org ~294 total contacts) ── */
     var ACCT_BASE = {
-      'Greenway Market':     { total: 112 },
+      'Greenway Market':     { total: 112, subs: [{ loc:'Boston', t:54 },{ loc:'New York', t:58 }] },
       'Living Root Kitchen': { total: 86 },
       'PureField Produce':   { total: 58 },
       'SunCoast Organics':   { total: 38 }
@@ -403,6 +411,18 @@
         html += '<td><span class="trend-badge up">+' + newC + '</span></td>';
         html += '<td>' + unsC.toLocaleString() + '</td>';
         html += '</tr>';
+        if (a.subs) {
+          a.subs.forEach(function(s) {
+            var sNew = Math.round((s.t * 0.025) * m);
+            var sUns = Math.round((s.t * 0.95) * m);
+            html += '<tr>';
+            html += '<td class="acct-name" style="padding-left:40px;color:#5d687e;font-weight:400;">— ' + s.loc + '</td>';
+            html += '<td>' + s.t + '</td>';
+            html += '<td><span class="trend-badge up">+' + sNew + '</span></td>';
+            html += '<td>' + sUns.toLocaleString() + '</td>';
+            html += '</tr>';
+          });
+        }
       });
       tbody.innerHTML = html;
     }
@@ -592,15 +612,27 @@
       if (selected[0] === 'all') {
         label.textContent = 'All accounts';
       } else if (selected.length === 1) {
-        label.textContent = selected[0];
+        var s = selected[0];
+        label.textContent = s.indexOf(' — ') !== -1 ? s.split(' — ')[1] + ' (' + s.split(' — ')[0] + ')' : s;
       } else {
         label.textContent = selected.length + ' selected';
       }
 
       document.querySelectorAll('#contacts-table tbody tr').forEach(function(r) {
         if (selected[0] === 'all') { r.style.display = ''; return; }
-        var cellText = r.querySelector('td').textContent.trim();
-        r.style.display = selected.indexOf(cellText) !== -1 ? '' : 'none';
+        var cellText = r.querySelector('td').textContent.trim().replace('— ', '');
+        var match = false;
+        selected.forEach(function(s) {
+          if (s.indexOf(' — ') !== -1) {
+            if (cellText === s.split(' — ')[1]) match = true;
+          } else {
+            if (cellText === s) match = true;
+            var prev = r.previousElementSibling;
+            while (prev && prev.querySelector('td').textContent.trim().indexOf('—') !== -1) prev = prev.previousElementSibling;
+            if (prev && prev.querySelector('td').textContent.trim() === s && r.querySelector('td').textContent.trim().indexOf('—') !== -1) match = true;
+          }
+        });
+        r.style.display = match ? '' : 'none';
       });
 
       document.getElementById('account-dropdown').classList.add('hidden');
