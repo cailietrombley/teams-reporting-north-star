@@ -5,34 +5,629 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Growth — Teams Reporting Hub</title>
 <style>
-  :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f1f5f9; --muted: #94a3b8; --border: #334155; --accent: #60a5fa; }
+  :root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --accent: #60a5fa;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
-  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: all 0.2s; }
-  .back-link:hover { gap: 0.75rem; }
-  .container { max-width: 1000px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
-  .phase-badge { display: inline-block; background: #dcfce7; color: #166534; font-size: 0.75rem; padding: 0.35rem 0.85rem; border-radius: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-  header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-  header .subtitle { font-size: 1.1rem; color: var(--muted); }
-  .coming-soon { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 3rem 2rem; text-align: center; }
-  .coming-soon-icon { font-size: 4rem; margin-bottom: 1.5rem; }
-  .coming-soon h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-  .coming-soon p { color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: all 0.2s;
+  }
+
+  .back-link:hover {
+    gap: 0.75rem;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .phase-badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  header .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+  }
+
+  .content-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .section-content {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .resource-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    margin-bottom: 0.75rem;
+  }
+
+  .resource-link:hover {
+    border-color: var(--accent);
+    background: rgba(96, 165, 250, 0.1);
+    transform: translateX(4px);
+  }
+
+  .resource-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .resource-info {
+    flex: 1;
+  }
+
+  .resource-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .resource-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .resource-arrow {
+    color: var(--accent);
+    font-size: 1.25rem;
+  }
+
+  .placeholder {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px dashed var(--border);
+    border-radius: 0.75rem;
+    color: var(--muted);
+  }
+
+  .opp-headline {
+    background: linear-gradient(135deg, #1e3a5f, #0d1a2e);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 0.75rem;
+    padding: 1.75rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(30, 64, 175, 0.15);
+  }
+
+  .opp-headline-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  .opp-headline-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .opp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .opp-partner {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .opp-partner-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .opp-partner-tag {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .opp-funnel-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 4px 0;
+    font-size: 0.8rem;
+  }
+
+  .opp-funnel-label {
+    color: var(--muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .opp-funnel-val {
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .opp-bar {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .opp-bar-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    border-radius: 2px;
+  }
+
+  .opp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .opp-table th {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .opp-table th.r, .opp-table td.r {
+    text-align: right;
+  }
+
+  .opp-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .opp-table td:first-child { color: var(--text); font-weight: 600; }
+  .opp-table tr:last-child td { border-bottom: none; }
+
+  .opp-callout {
+    background: rgba(240, 136, 62, 0.06);
+    border: 1px solid rgba(240, 136, 62, 0.2);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .opp-callout-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #f0883e;
+    margin-bottom: 4px;
+  }
+
+  .opp-callout p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .opp-callout.critical {
+    background: rgba(248, 81, 73, 0.06);
+    border-color: rgba(248, 81, 73, 0.25);
+  }
+
+  .opp-callout.critical .opp-callout-label {
+    color: #f85149;
+  }
+
+  .opp-activities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .opp-act {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .opp-act-pct {
+    font-size: 1.1rem;
+    font-weight: 800;
+    min-width: 42px;
+    text-align: right;
+  }
+
+  .opp-act-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  .opp-future {
+    background: linear-gradient(135deg, rgba(63, 185, 80, 0.08), rgba(96, 165, 250, 0.05));
+    border: 1px solid rgba(63, 185, 80, 0.2);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .opp-future-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #3fb950;
+    margin-bottom: 4px;
+  }
+
+  .opp-future p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .opp-success-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .opp-success-item {
+    background: rgba(63, 185, 80, 0.05);
+    border: 1px solid rgba(63, 185, 80, 0.15);
+    border-radius: 0.5rem;
+    padding: 12px;
+  }
+
+  .opp-success-item strong {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .opp-success-item span {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .opp-source {
+    font-size: 0.65rem;
+    color: #484f58;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .opp-grid, .opp-activities, .opp-success-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <a href="north-star-framework.html#roadmap" class="back-link">← Back to Hub</a>
+  <a href="index.html" class="back-link">
+    ← Back to Hub
+  </a>
+
   <header>
     <div class="phase-badge">Phase 2 • Q2 2026</div>
     <h1>📊 Contact Growth</h1>
-    <p class="subtitle">List growth roll-ups and audience health tracking</p>
+    <p class="subtitle">List growth roll-ups, audience health tracking, and engagement trends across accounts</p>
   </header>
-  <div class="coming-soon">
-    <div class="coming-soon-icon">🚧</div>
-    <h2>Page Under Construction</h2>
-    <p>Detailed requirements and implementation plans coming soon.</p>
+
+  <div class="content-grid">
+    <!-- One Pager Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📄</div>
+        <h2 class="section-title">One Pager</h2>
+      </div>
+      <div class="section-content">
+        <a href="https://ctct.atlassian.net/wiki/spaces/PDM/pages/14492008589/Overview+Contact+Drill+Down+Reporting+Teams" target="_blank" class="resource-link">
+          <div class="resource-icon">📝</div>
+          <div class="resource-info">
+            <div class="resource-title">Overview: Contact Drill-Down Reporting (Teams)</div>
+            <div class="resource-desc">Executive summary on Confluence</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PRD Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2 class="section-title">Product Requirements Document (PRD)</h2>
+      </div>
+      <div class="section-content">
+        <a href="https://ctct.atlassian.net/wiki/spaces/PDM/pages/14496006216/PRD+-+Contact+Reporting" target="_blank" class="resource-link">
+          <div class="resource-icon">📋</div>
+          <div class="resource-info">
+            <div class="resource-title">PRD: Contact Reporting</div>
+            <div class="resource-desc">Detailed requirements and specifications on Confluence (WIP)</div>
+          </div>
+          <div class="resource-arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Timeline & Project Tracking -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📅</div>
+        <h2 class="section-title">Timeline & Project Tracking</h2>
+      </div>
+      <div class="section-content">
+        <div class="placeholder">
+          <p style="font-size: 0.85rem;">Jira epic and GTM tracker will be linked here once available</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prototype & Research Section -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">🔗</div>
+        <h2 class="section-title">Prototype & Research</h2>
+      </div>
+      <div class="section-content">
+        <a href="#opportunity" class="resource-link">
+          <div class="resource-icon">📈</div>
+          <div class="resource-info">
+            <div class="resource-title">Analytics & Usage Data</div>
+            <div class="resource-desc">Current adoption baseline and data reliability findings — see below</div>
+          </div>
+          <div class="resource-arrow">↓</div>
+        </a>
+
+        <div class="placeholder" style="margin-top: 1rem;">
+          <p style="font-size: 0.85rem;">Prototype and additional research links will be added as they become available</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Opportunity & Current Usage -->
+    <section class="section-card" id="opportunity">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <h2 class="section-title">Opportunity — Current Contacts Usage</h2>
+      </div>
+      <div class="section-content">
+
+        <div class="opp-headline">
+          <div class="opp-headline-number">592</div>
+          <div class="opp-headline-label">
+            partners visited the Contacts tab in Jan–Feb 2026 — out of <strong style="color:var(--text);">15,754</strong> total active customers
+          </div>
+          <div style="font-size:0.75rem;color:#64748b;margin-top:8px;">That's 3.8% of the total active base. Contact health data is barely reaching partners today.</div>
+        </div>
+
+        <!-- Partner funnels -->
+        <div class="opp-grid">
+          <div class="opp-partner" style="border-top: 3px solid #3fb950;">
+            <div class="opp-partner-name" style="color:#3fb950;">Multi-Location</div>
+            <div class="opp-partner-tag">Highest engagement — 9.9% of active base</div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Total Active</span>
+              <span class="opp-funnel-val" style="color:var(--text);">3,812</span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:100%;background:#3fb950;opacity:0.3;"></div></div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Contacts Tab</span>
+              <span class="opp-funnel-val" style="color:#3fb950;">376 <span style="font-size:0.7rem;">(9.9%)</span></span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:9.9%;background:#3fb950;"></div></div>
+          </div>
+
+          <div class="opp-partner" style="border-top: 3px solid #e3b341;">
+            <div class="opp-partner-name" style="color:#e3b341;">Franchise</div>
+            <div class="opp-partner-tag">Low engagement — 3.6% of active base</div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Total Active</span>
+              <span class="opp-funnel-val" style="color:var(--text);">916</span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:100%;background:#e3b341;opacity:0.3;"></div></div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Contacts Tab</span>
+              <span class="opp-funnel-val" style="color:#e3b341;">33 <span style="font-size:0.7rem;">(3.6%)</span></span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:3.6%;background:#e3b341;"></div></div>
+          </div>
+
+          <div class="opp-partner" style="border-top: 3px solid #f0883e;">
+            <div class="opp-partner-name" style="color:#f0883e;">Marketing Service Provider</div>
+            <div class="opp-partner-tag">Lowest engagement — 1.6% of active base</div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Total Active</span>
+              <span class="opp-funnel-val" style="color:var(--text);">11,426</span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:100%;background:#f0883e;opacity:0.3;"></div></div>
+            <div class="opp-funnel-row">
+              <span class="opp-funnel-label">Contacts Tab</span>
+              <span class="opp-funnel-val" style="color:#f0883e;">183 <span style="font-size:0.7rem;">(1.6%)</span></span>
+            </div>
+            <div class="opp-bar"><div class="opp-bar-fill" style="width:1.6%;background:#f0883e;"></div></div>
+          </div>
+        </div>
+
+        <!-- Comparison table -->
+        <table class="opp-table">
+          <thead>
+            <tr>
+              <th>Partner Type</th>
+              <th class="r">Total Active</th>
+              <th class="r">Contacts Tab</th>
+              <th class="r">% of Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="color:#3fb950;">●</span> Multi-Location</td>
+              <td class="r">3,812</td>
+              <td class="r" style="color:#3fb950;font-weight:700;">376</td>
+              <td class="r" style="color:#3fb950;font-weight:700;">9.9%</td>
+            </tr>
+            <tr>
+              <td><span style="color:#e3b341;">●</span> Franchise</td>
+              <td class="r">916</td>
+              <td class="r" style="color:#e3b341;font-weight:700;">33</td>
+              <td class="r" style="color:#e3b341;font-weight:700;">3.6%</td>
+            </tr>
+            <tr>
+              <td><span style="color:#f0883e;">●</span> MSP</td>
+              <td class="r">11,426</td>
+              <td class="r" style="color:#f0883e;font-weight:700;">183</td>
+              <td class="r" style="color:#f0883e;font-weight:700;">1.6%</td>
+            </tr>
+            <tr style="border-top:2px solid var(--border);">
+              <td style="color:var(--accent);">Combined</td>
+              <td class="r" style="color:var(--text);font-weight:700;">15,754</td>
+              <td class="r" style="color:var(--accent);font-weight:700;">592</td>
+              <td class="r" style="color:var(--accent);font-weight:700;">3.8%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Critical data issue -->
+        <div class="opp-callout critical">
+          <div class="opp-callout-label">Critical — Data Reliability Issue</div>
+          <p><strong style="color:var(--text);">53% of Contacts visitors automatically trigger a data discrepancy event on page load.</strong> Partners reporting on client list health are being shown unreliable numbers. This needs to be resolved before Contact Growth reporting can deliver trustworthy insights. Escalation to product and data engineering is required.</p>
+        </div>
+
+        <div class="opp-callout">
+          <div class="opp-callout-label">Key Insight</div>
+          <p>Contacts usage is dramatically lower than Email Reporting (3.8% vs 10.8% of active base). The combination of low visibility and unreliable data means partners have little reason to visit today. Fixing data reliability is the prerequisite — without it, any new Contact Growth features will inherit a trust problem.</p>
+        </div>
+
+        <!-- Future state -->
+        <div class="opp-future">
+          <div class="opp-future-title">Expected Impact — Contact Growth Reporting</div>
+          <p style="margin-bottom:14px;">A dedicated Contact Growth surface would give partners cross-account visibility into list health, growth trends, and engagement quality — the data they need to advise clients on audience strategy.</p>
+        </div>
+
+        <!-- Success criteria -->
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#3fb950;margin-bottom:10px;">What "success" looks like after launch</div>
+        <div class="opp-success-grid">
+          <div class="opp-success-item">
+            <strong>Contacts tab usage exceeds 592 baseline</strong>
+            <span>Surfacing list health data in a dedicated view should drive significantly more visits than the current tab.</span>
+          </div>
+          <div class="opp-success-item">
+            <strong>Data discrepancy events drop to &lt;5%</strong>
+            <span>Resolving the reliability issue is the prerequisite for any meaningful adoption growth.</span>
+          </div>
+          <div class="opp-success-item">
+            <strong>Partners take action on list health insights</strong>
+            <span>Drill-downs into underperforming lists, exports for client reporting, and engagement trend analysis.</span>
+          </div>
+        </div>
+
+        <div class="opp-source">Data: 2026 YTD (Jan–Feb). Total active customers from BI. Contacts usage from Snowflake. Data discrepancy rate from on-page event tracking.</div>
+
+      </div>
+    </section>
+
   </div>
 </div>
 </body>
